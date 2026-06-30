@@ -1,0 +1,10 @@
+/* Dark mode: only neutrals flip; accent per theme stays.
+   To remove dark mode entirely, delete this file + its @use in globals,
+   the prefs store colorScheme branch, and the admin toggle. */
+[data-color-scheme="dark"] {
+  --paper: #14161a;
+  --paper-2: #1b1e24;
+  --ink: #f3f2ef;
+  --ink-soft: #a4a8b0;
+  --hairline: #2c2f36;
+}

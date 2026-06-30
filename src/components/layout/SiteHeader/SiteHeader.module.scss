@@ -1,0 +1,69 @@
+@use "styles/mixins" as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid var(--hairline);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+.brand {
+  font-family: var(--font-mono);
+  font-size: var(--text-l);
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+.toggle {
+  font-size: var(--text-l);
+  background: none;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1;
+  @include md {
+    display: none;
+  }
+}
+.nav {
+  display: none;
+  &.navOpen {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--hairline);
+    padding: var(--s-5) var(--s-4);
+  }
+  @include md {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--s-6);
+    position: static;
+    padding: 0;
+    border: none;
+  }
+  a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--text-m);
+  }
+  a:hover {
+    color: var(--accent);
+  }
+}
+.cta {
+  color: var(--accent) !important;
+  font-weight: 600;
+}

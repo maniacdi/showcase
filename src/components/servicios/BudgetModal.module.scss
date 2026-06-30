@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+.intro {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.select {
+  font-family: var(--font-sans);
+  font-size: var(--text-m);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+}
+.sent {
+  font-size: var(--text-l);
+  color: var(--accent);
+}

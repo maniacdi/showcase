@@ -1,0 +1,11 @@
+/node_modules
+/.next
+/out
+/build
+*.log
+.env*
+!.env.example
+.DS_Store
+/coverage
+next-env.d.ts
+/docs

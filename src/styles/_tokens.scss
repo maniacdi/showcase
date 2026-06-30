@@ -1,0 +1,43 @@
+:root {
+  /* Neutrals (chosen, warm bias) */
+  --paper: #fafaf9;
+  --paper-2: #f2f1ee;
+  --ink: #16181d;
+  --ink-soft: #5b5f66;
+  --hairline: #e5e4e0;
+
+  /* Accent — default; overridden per theme by ThemeProvider */
+  --accent: #1f4fff;
+  --accent-ink: #ffffff;
+
+  /* Spacing 4/8 */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+
+  /* Shape */
+  --radius: 2px;
+  --shadow-overlay: 0 8px 30px rgba(22, 24, 29, 0.12);
+
+  /* Letter-spacing */
+  --tracking-tight: -0.022em; /* big display headings */
+  --tracking-label: 0.12em; /* mono eyebrows / labels */
+
+  /* Unified type scale — the ONLY font sizes in the project */
+  --text-xs: 0.78rem;
+  --text-s: 0.9rem;
+  --text-m: 1rem;
+  --text-l: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.5rem;
+  --text-3xl: clamp(2.75rem, 6vw, 4rem);
+
+  /* Fonts — --font-sans is reassigned at runtime via prefs store */
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}

@@ -1,0 +1,109 @@
+@use "styles/mixins" as *;
+
+.head {
+  padding-block: var(--s-8) var(--s-6);
+}
+.title {
+  font-size: var(--text-3xl);
+}
+.subtitle {
+  font-size: var(--text-l);
+  color: var(--ink-soft);
+  margin-top: var(--s-4);
+  max-width: 40ch;
+}
+.seoLead {
+  font-size: var(--text-m);
+  color: var(--ink-soft);
+  margin-top: var(--s-4);
+  max-width: 68ch;
+  line-height: 1.6;
+}
+.disclaimer {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  margin-bottom: var(--s-6);
+  padding: var(--s-4);
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--paper-2);
+  max-width: 68ch;
+}
+.disclaimer p {
+  font-size: var(--text-s);
+  color: var(--ink);
+}
+.disclaimerTag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+  white-space: nowrap;
+  padding-top: 2px;
+}
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+.item {
+  border-bottom: 1px solid var(--hairline);
+}
+.link {
+  display: grid;
+  gap: var(--s-1);
+  padding-block: var(--s-5);
+  color: var(--ink);
+  text-decoration: none;
+  @include md {
+    grid-template-columns: 1fr 2fr auto;
+    align-items: baseline;
+    gap: var(--s-5);
+  }
+}
+.link:hover {
+  text-decoration: none;
+}
+.link:hover .name {
+  color: var(--accent);
+}
+.name {
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+.desc {
+  font-size: var(--text-m);
+  color: var(--ink-soft);
+}
+.soon {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  padding: var(--s-1) var(--s-2);
+  justify-self: start;
+}
+
+.hubFoot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-top: var(--s-8);
+  padding-block: var(--s-6);
+  border-top: 1px solid var(--hairline);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}
+.hubLinks {
+  display: flex;
+  gap: var(--s-5);
+}
+.hubLinks a {
+  color: var(--ink);
+}

@@ -1,0 +1,76 @@
+@use "styles/mixins" as *;
+
+.footer {
+  border-top: 1px solid var(--hairline);
+  padding-block: var(--s-7);
+  margin-top: var(--s-8);
+}
+
+/* Hire CTA band */
+.hire {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-items: flex-start;
+  padding: var(--s-6);
+  margin-bottom: var(--s-6);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius);
+  @include md {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.hireCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+.hireTitle {
+  font-size: var(--text-l);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+.hireText {
+  font-size: var(--text-s);
+  opacity: 0.9;
+}
+.hireCta {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-s);
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius);
+  padding: var(--s-3) var(--s-5);
+  transition: background 0.15s ease;
+}
+.hireCta:hover {
+  background: rgba(255, 255, 255, 0.26);
+  text-decoration: none;
+}
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-items: flex-start;
+  @include md {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.notice {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}

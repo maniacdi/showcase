@@ -1,0 +1,52 @@
+@use "styles/mixins" as *;
+
+.wrap {
+  max-width: 960px;
+}
+.back {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.grid {
+  display: grid;
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+  @include md {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-8);
+  }
+}
+.image {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.cat {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.name {
+  font-size: var(--text-2xl);
+}
+.price {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  color: var(--accent);
+}
+.desc {
+  color: var(--ink-soft);
+  max-width: 50ch;
+}

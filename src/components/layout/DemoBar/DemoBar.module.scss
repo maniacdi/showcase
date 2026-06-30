@@ -1,0 +1,25 @@
+@use "styles/mixins" as *;
+
+.bar {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--hairline);
+}
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-block: var(--s-2);
+}
+.text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+  white-space: nowrap;
+}

@@ -1,0 +1,183 @@
+@use "styles/mixins" as *;
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-7) var(--s-5);
+}
+.title {
+  font-size: var(--text-2xl);
+}
+.intro {
+  font-size: var(--text-m);
+  color: var(--ink-soft);
+  margin-top: var(--s-2);
+}
+
+/* Catalog grid */
+.grid {
+  display: grid;
+  gap: var(--s-5);
+  padding-bottom: var(--s-8);
+  grid-template-columns: repeat(2, 1fr);
+  @include md {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--ink);
+}
+.thumb {
+  display: block;
+}
+.thumbInner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  /* faint diagonal hairlines over the category color → texture, not flat */
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.14) 0,
+    rgba(255, 255, 255, 0.14) 1px,
+    transparent 1px,
+    transparent 11px
+  );
+  background-blend-mode: overlay;
+}
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-4);
+}
+.cardCat {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.cardName {
+  font-size: var(--text-m);
+  font-weight: 600;
+  color: var(--ink);
+}
+.cardPrice {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+.cardCta {
+  margin-top: var(--s-3);
+  width: 100%;
+}
+
+.cartLink {
+  font-family: var(--font-mono);
+  font-size: var(--text-s);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* Product detail add row */
+.addRow {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.qtyLabel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.qtyInput {
+  width: 72px;
+  font-family: var(--font-mono);
+  font-size: var(--text-m);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Cart */
+.cartWrap {
+  max-width: 720px;
+  padding-block: var(--s-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+.cartList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+.cartRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: var(--s-4);
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--hairline);
+}
+.cartName {
+  font-weight: 600;
+}
+.cartLine {
+  font-family: var(--font-mono);
+}
+.removeBtn {
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: var(--text-s);
+  text-decoration: underline;
+}
+.cartFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 2px solid var(--ink);
+  padding-top: var(--s-4);
+}
+.totalLabel {
+  font-size: var(--text-l);
+}
+.totalValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+}
+.checkoutDone {
+  font-size: var(--text-xl);
+  color: var(--accent);
+}
+.back {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+  width: fit-content;
+}
