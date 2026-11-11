@@ -134,9 +134,18 @@
   --auth-panel-radius: 0;
   --auth-panel-border: 0 solid transparent;
   --auth-panel-shadow: none;
+
+  /* footer band (hub): inverted panel below the closing CTA */
+  --footer-bg: #16181d;
+  --footer-ink: #f3f2ef;
+  --footer-soft: #a4a8b0;
+  --footer-line: #2c2f36;
+  --footer-radius: 0;
+  --footer-backdrop: none;
 }
 
 @include define-dark("swiss") {
+  --footer-bg: #0b0c0f;
   --paper: #14161a;
   --paper-2: #1b1e24;
   --ink: #f3f2ef;
@@ -221,6 +230,11 @@
   --auth-panel-inset: var(--s-5);
   --auth-panel-border: 3px solid #0a0a0a;
   --auth-panel-shadow: 10px 10px 0 #0a0a0a;
+
+  --footer-bg: #0a0a0a;
+  --footer-ink: #f4efe1;
+  --footer-soft: #cfc8b6;
+  --footer-line: rgba(244, 239, 225, 0.25);
 }
 
 @include define-dark("brutalism") {
@@ -317,6 +331,11 @@
   --auth-panel-line: rgba(0, 240, 255, 0.1);
   --auth-panel-border: 1px solid rgba(0, 240, 255, 0.28);
   --auth-panel-shadow: inset 0 0 80px rgba(0, 240, 255, 0.08);
+
+  --footer-bg: linear-gradient(180deg, #020306, #05070d);
+  --footer-ink: var(--ink);
+  --footer-soft: var(--ink-soft);
+  --footer-line: rgba(0, 240, 255, 0.16);
 }
 
 /* ---------------------------------------------------------------------
@@ -403,6 +422,13 @@
   --auth-panel-radius: 32px;
   --auth-panel-border: 1px solid rgba(255, 255, 255, 0.5);
   --auth-panel-shadow: 0 24px 60px rgba(31, 38, 135, 0.3);
+
+  --footer-bg: rgba(22, 16, 48, 0.82);
+  --footer-ink: #f1eefe;
+  --footer-soft: #b6afd6;
+  --footer-line: rgba(255, 255, 255, 0.12);
+  --footer-radius: 36px;
+  --footer-backdrop: blur(20px) saturate(140%);
 }
 
 @include define-dark("glassmorphism") {
@@ -503,9 +529,16 @@
   --auth-panel-inset: var(--s-5);
   --auth-panel-radius: 36px;
   --auth-panel-shadow: 14px 14px 30px var(--neu-dark), -14px -14px 30px var(--neu-light);
+
+  --footer-bg: #2d3440;
+  --footer-ink: #e6e9ef;
+  --footer-soft: #9aa3b2;
+  --footer-line: #3d4554;
+  --footer-radius: 40px;
 }
 
 @include define-dark("neumorphism") {
+  --footer-bg: #1d2128;
   --paper: #262b33;
   --paper-2: #262b33;
   --ink: #e6e9ef;
@@ -586,9 +619,16 @@
   --auth-panel-line: rgba(255, 255, 255, 0.07);
   --auth-panel-inset: var(--s-4);
   --auth-panel-radius: 32px;
+
+  --footer-bg: #111214;
+  --footer-ink: #f4f4f5;
+  --footer-soft: #a1a1aa;
+  --footer-line: rgba(255, 255, 255, 0.08);
+  --footer-radius: 36px;
 }
 
 @include define-dark("bento") {
+  --footer-bg: #18181b;
   --paper: #0c0c0e;
   --paper-2: #0c0c0e;
   --paper-3: #18181b;

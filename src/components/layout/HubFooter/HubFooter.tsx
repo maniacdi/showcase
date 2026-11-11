@@ -42,88 +42,92 @@ export default function HubFooter() {
             <span className={styles.ctaMeta}>{t("ctaMeta")}</span>
           </div>
         </section>
+      </Container>
 
-        {/* Sitemap */}
-        <div className={styles.grid}>
-          <div className={styles.about}>
-            <Brand />
-            <p>{t("about")}</p>
-          </div>
+      {/* Inverted band: sitemap, wordmark, legal bar */}
+      <div className={styles.band}>
+        <Container>
+          <div className={styles.grid}>
+            <div className={styles.about}>
+              <Brand />
+              <p>{t("about")}</p>
+            </div>
 
-          <nav className={styles.col} aria-label={t("explore")}>
-            <h3 className={styles.colTitle}>{t("explore")}</h3>
-            <ul>
-              <li>
-                <a href="#estilos">{th("stylesKicker")}</a>
-              </li>
-              <li>
-                <a href="#demos">{th("demosKicker")}</a>
-              </li>
-              <li>
-                <a href="#proyectos">{th("projectsKicker")}</a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav className={styles.col} aria-label={t("demos")}>
-            <h3 className={styles.colTitle}>{t("demos")}</h3>
-            <ul>
-              {DEMOS.map((d) => (
-                <li key={d.key}>
-                  <Link href={d.href}>{th(d.key)}</Link>
+            <nav className={styles.col} aria-label={t("explore")}>
+              <h3 className={styles.colTitle}>{t("explore")}</h3>
+              <ul>
+                <li>
+                  <a href="#estilos">{th("stylesKicker")}</a>
                 </li>
-              ))}
-            </ul>
-          </nav>
+                <li>
+                  <a href="#demos">{th("demosKicker")}</a>
+                </li>
+                <li>
+                  <a href="#proyectos">{th("projectsKicker")}</a>
+                </li>
+              </ul>
+            </nav>
 
-          <nav className={styles.col} aria-label={t("contact")}>
-            <h3 className={styles.colTitle}>{t("contact")}</h3>
-            <ul>
-              <li>
-                <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
-              </li>
-              <li>
-                <a href={wa} target="_blank" rel="noopener noreferrer">
-                  WhatsApp ↗
-                </a>
-              </li>
-              <li>
-                <a href={SITE.portfolioUrl} target="_blank" rel="noopener noreferrer">
-                  Portfolio ↗
-                </a>
-              </li>
-              <li>
-                <a href={SITE.githubUrl} target="_blank" rel="noopener noreferrer">
-                  GitHub ↗
-                </a>
-              </li>
-            </ul>
-          </nav>
+            <nav className={styles.col} aria-label={t("demos")}>
+              <h3 className={styles.colTitle}>{t("demos")}</h3>
+              <ul>
+                {DEMOS.map((d) => (
+                  <li key={d.key}>
+                    <Link href={d.href}>{th(d.key)}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          <div className={styles.col}>
-            <h3 className={styles.colTitle}>{t("language")}</h3>
-            <LocaleSwitcher />
-            <p className={styles.styleHint}>{t("styleHint")}</p>
+            <nav className={styles.col} aria-label={t("contact")}>
+              <h3 className={styles.colTitle}>{t("contact")}</h3>
+              <ul>
+                <li>
+                  <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+                </li>
+                <li>
+                  <a href={wa} target="_blank" rel="noopener noreferrer">
+                    WhatsApp ↗
+                  </a>
+                </li>
+                <li>
+                  <a href={SITE.portfolioUrl} target="_blank" rel="noopener noreferrer">
+                    Portfolio ↗
+                  </a>
+                </li>
+                <li>
+                  <a href={SITE.githubUrl} target="_blank" rel="noopener noreferrer">
+                    GitHub ↗
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+            <div className={styles.col}>
+              <h3 className={styles.colTitle}>{t("language")}</h3>
+              <LocaleSwitcher />
+              <p className={styles.styleHint}>{t("styleHint")}</p>
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
 
-      {/* Giant wordmark — decorative */}
-      <div className={styles.wordmark} aria-hidden="true">
-        showcase
+        {/* Giant wordmark — decorative */}
+        <div className={styles.wordmark} aria-hidden="true">
+          showcase
+        </div>
+
+        <Container className={styles.barWrap}>
+          <div className={styles.bar}>
+            <span>
+              © {year} Javi García Magaldi · {t("rights")}
+            </span>
+            <span>{t("built")}</span>
+            <a href="#top" className={styles.toTop}>
+              {t("toTop")} ↑
+            </a>
+          </div>
+        </Container>
       </div>
-
-      <Container>
-        <div className={styles.bar}>
-          <span>
-            © {year} Javi García Magaldi · {t("rights")}
-          </span>
-          <span>{t("built")}</span>
-          <a href="#top" className={styles.toTop}>
-            {t("toTop")} ↑
-          </a>
-        </div>
-      </Container>
     </footer>
   );
 }
