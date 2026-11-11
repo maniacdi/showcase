@@ -2,3 +2,50 @@
 @mixin md { @media (min-width: 768px) { @content; } }
 @mixin lg { @media (min-width: 1024px) { @content; } }
 @mixin xl { @media (min-width: 1280px) { @content; } }
+
+/* ---- Design-style hooks ----
+   Components never hard-code surface looks: they include these mixins, which
+   only read tokens. Each design style (styles/_design-styles.scss) redefines
+   the tokens, so the same markup re-skins completely. */
+
+/* A boxed surface: cards, panels, plans, dialogs, tables. */
+@mixin surface {
+  background: var(--surface);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+@mixin surface-hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* An "open" item that is a hairline list row in Swiss but becomes a card in
+   boxier styles (services, advantages, testimonials). */
+@mixin tile($top: 2px solid var(--ink), $pad: 0) {
+  background: var(--tile-bg);
+  border: var(--tile-border);
+  border-top: var(--tile-top, #{$top});
+  border-radius: var(--tile-radius);
+  box-shadow: var(--tile-shadow);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+  padding: var(--tile-pad, #{$pad});
+}
+
+/* Form controls: inputs, selects, textareas, slot buttons. */
+@mixin control {
+  background: var(--input-bg);
+  border: var(--input-border);
+  border-radius: var(--ctl-radius);
+  box-shadow: var(--input-shadow);
+  color: var(--ink);
+}

@@ -18,7 +18,7 @@ entorno**. Rápida, accesible y optimizada para SEO.
 
 | Ruta | Qué es |
 |------|--------|
-| `/` | Hub: índice de demos + pitch |
+| `/` | Hub: pitch, galería de estilos, demos y proyectos reales |
 | `/servicios` | Landing de negocio local (hero, servicios, por qué, precios, testimonios, contacto + mapa) |
 | `/tienda` `/tienda/[slug]` `/tienda/carrito` | Ecommerce: catálogo, ficha, carrito persistido, checkout mock |
 | `/reservas` | Reserva de citas (servicio + día + hora) |
@@ -114,9 +114,27 @@ src/
 
 ---
 
+## Estilos visuales conmutables
+Seis lenguajes visuales sobre el mismo HTML: **Swiss** (por defecto),
+**Brutalism**, **Neofuturism**, **Glassmorphism**, **Neumorphism** y **Bento Grid**.
+
+- Selector flotante «Estilo» (abajo a la izquierda) en todas las páginas + galería
+  comparativa en el hub. Enlace compartible: `/?style=brutalism`.
+- `<html data-style="…">` (aplicado antes del primer pintado por
+  `src/themes/PrefsScript.tsx`, persistido en `usePrefsStore`).
+- Cada estilo es un bloque de **solo custom properties** en
+  `src/styles/_design-styles.scss`. Los componentes nunca preguntan por el estilo:
+  leen tokens vía los mixins `surface`, `tile` y `control` de `_mixins.scss`.
+- Cualquier elemento con `data-style` renderiza ese estilo localmente (así funcionan
+  las previews del hub).
+- **Para un cliente con estilo fijo:** deja solo su bloque, quita `StyleSwitcher`
+  del layout y la `StyleGallery` del hub.
+- Las reglas de abajo (radio ≤ 2px, sin sombras ni degradados) son las del estilo
+  Swiss; los demás estilos las rompen a propósito dentro de sus tokens.
+
 ## Sistema de diseño
-- Tokens en `src/styles/_tokens.scss` (neutros cálidos, espaciado 4/8, escala
-  tipográfica, acento por defecto).
+- Tokens base en `src/styles/_tokens.scss` (espaciado 4/8, escala tipográfica,
+  acento por defecto); neutros/superficies por estilo en `_design-styles.scss`.
 - Acentos por vertical en `src/themes/themes.ts`; `ThemeProvider theme="…"` los aplica.
 
 ## Tipografía

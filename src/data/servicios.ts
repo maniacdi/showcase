@@ -30,6 +30,8 @@ export const ventajas: Ventaja[] = [
   { num: "04", title: "Tú al mando", text: "Panel para gestionar contenido, citas o productos sin depender de nadie." },
 ];
 
+// Prices are ORIENTATIVE starting points ("desde"); the final quote comes after
+// assessing each project. The UI always renders them with a "from" label + note.
 export const plans: PricingPlan[] = [
   {
     name: "Landing",
@@ -44,7 +46,7 @@ export const plans: PricingPlan[] = [
   },
   {
     name: "Tienda / Reservas",
-    price: "desde 650 €",
+    price: "650 €",
     features: ["Catálogo o reservas", "Panel de gestión", "Pasarela o calendario", "Soporte"],
   },
 ];

@@ -1,10 +1,6 @@
 :root {
-  /* Neutrals (chosen, warm bias) */
-  --paper: #fafaf9;
-  --paper-2: #f2f1ee;
-  --ink: #16181d;
-  --ink-soft: #5b5f66;
-  --hairline: #e5e4e0;
+  /* Neutrals, radius, shadows and all surface tokens live per design style
+     in _design-styles.scss (Swiss = default). */
 
   /* Accent — default; overridden per theme by ThemeProvider */
   --accent: #1f4fff;
@@ -20,10 +16,6 @@
   --s-7: 48px;
   --s-8: 64px;
 
-  /* Shape */
-  --radius: 2px;
-  --shadow-overlay: 0 8px 30px rgba(22, 24, 29, 0.12);
-
   /* Letter-spacing */
   --tracking-tight: -0.022em; /* big display headings */
   --tracking-label: 0.12em; /* mono eyebrows / labels */
@@ -36,6 +28,8 @@
   --text-xl: 1.75rem;
   --text-2xl: 2.5rem;
   --text-3xl: clamp(2.75rem, 6vw, 4rem);
+  --text-4xl: clamp(3.25rem, 11vw, 7.5rem); /* hub hero only */
+  --text-wordmark: clamp(4rem, 19vw, 18rem); /* footer wordmark only */
 
   /* Fonts — --font-sans is reassigned at runtime via prefs store */
   --font-sans: var(--font-archivo), system-ui, sans-serif;

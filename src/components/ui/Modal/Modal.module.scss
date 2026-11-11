@@ -1,8 +1,12 @@
+@use "styles/mixins" as *;
+
 .overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(22, 24, 29, 0.45);
+  background: var(--overlay-bg);
+  backdrop-filter: var(--overlay-backdrop);
+  -webkit-backdrop-filter: var(--overlay-backdrop);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -14,9 +18,8 @@
   }
 }
 .dialog {
-  background: var(--paper);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  @include surface;
+  background: var(--dialog-bg);
   box-shadow: var(--shadow-overlay);
   width: 100%;
   max-width: 480px;
@@ -28,7 +31,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--s-5);
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: var(--card-border);
 }
 .title {
   font-size: var(--text-l);

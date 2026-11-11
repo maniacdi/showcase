@@ -1,10 +1,9 @@
+@use "styles/mixins" as *;
+
 .input {
-  font-family: var(--font-sans);
+  font-family: var(--font-style);
   font-size: var(--text-m);
-  color: var(--ink);
-  background: var(--paper);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  @include control;
   padding: var(--s-3) var(--s-4);
   width: 100%;
 }

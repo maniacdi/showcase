@@ -36,15 +36,20 @@ export default function RegisterFields({ onSwitch }: { onSwitch: () => void }) {
 
   return (
     <div className={styles.fields}>
-      <h1 className={styles.title}>{t("registerTitle")}</h1>
+      <div className={styles.headBlock}>
+        <span className={styles.eyebrow}>{t("registerEyebrow")}</span>
+        <h1 className={styles.title}>{t("registerTitle")}</h1>
+        <p className={styles.subtitle}>{t("registerSub")}</p>
+      </div>
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         <Field label={t("name")} htmlFor="reg-name">
-          <Input id="reg-name" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input id="reg-name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
         </Field>
         <Field label={t("email")} htmlFor="reg-email">
           <Input
             id="reg-email"
             type="email"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -53,11 +58,14 @@ export default function RegisterFields({ onSwitch }: { onSwitch: () => void }) {
           <Input
             id="reg-password"
             type="password"
+            autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Field>
-        <Button type="submit">{t("register")}</Button>
+        <Button type="submit" className={styles.submit}>
+          {t("register")}
+        </Button>
       </form>
 
       <button type="button" className={styles.mobileSwitch} onClick={onSwitch}>

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { NextIntlClientProvider } from "next-intl";
@@ -9,10 +9,27 @@ import WhatsAppButton from "@/components/layout/WhatsAppButton/WhatsAppButton";
 import { SITE } from "@/config/site";
 import { FONT_CLASSNAMES } from "@/themes/fonts";
 import PrefsApplier from "@/themes/PrefsApplier";
+import PrefsScript from "@/themes/PrefsScript";
+import StyleSwitcher from "@/components/style/StyleSwitcher";
 import "@/styles/globals.scss";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
+    { media: "(prefers-color-scheme: dark)", color: "#14161a" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
+  applicationName: "Showcase",
+  authors: [{ name: "Javi García Magaldi", url: SITE.portfolioUrl }],
+  creator: "Javi García Magaldi",
+  formatDetection: { telephone: false, email: false, address: false },
+  robots: { index: true, follow: true, "max-image-preview": "large" },
+  twitter: { card: "summary_large_image" },
   title: {
     default: "Showcase — Desarrollo web a medida para comercios",
     template: "%s · Showcase",
@@ -56,11 +73,16 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={FONT_CLASSNAMES}>
+    // suppressHydrationWarning: PrefsScript sets data-style/data-color-scheme pre-paint.
+    <html lang={locale} className={FONT_CLASSNAMES} suppressHydrationWarning>
+      <head>
+        <PrefsScript />
+      </head>
       <body>
         <NextIntlClientProvider messages={messages}>
           <PrefsApplier />
           {children}
+          <StyleSwitcher />
           <WhatsAppButton />
           <Analytics />
         </NextIntlClientProvider>

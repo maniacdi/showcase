@@ -15,7 +15,7 @@
   },
   "hub": {
     "title": "Showcase",
-    "subtitle": "Una base limpia para webs de comercio. Elige una demo.",
+    "subtitle": "Una base, seis lenguajes visuales y proyectos reales.",
     "seoLead": "Demos de desarrollo web a medida para comercios y negocios locales: tiendas online, webs para clínicas y restaurantes, sistemas de reserva de citas y paneles de gestión. Webs rápidas, accesibles y optimizadas para SEO con Next.js.",
     "disclaimer": "Estas demos son esquemas funcionales, no el diseño final. Cada proyecto se adapta a la identidad, el contenido y las necesidades de cada cliente.",
     "disclaimerTag": "Aviso",
@@ -27,7 +27,23 @@
     "reservasDesc": "Calendario y reserva de cita.",
     "admin": "Panel de administración",
     "adminDesc": "Gestión tras inicio de sesión.",
-    "soon": "Próximamente"
+    "soon": "Próximamente",
+    "kicker": "Javi García Magaldi · Desarrollo web",
+    "ctaStyles": "Prueba los estilos",
+    "ctaDemos": "Ver demos",
+    "statStyles": "Estilos",
+    "statDemos": "Demos",
+    "statProjects": "Proyectos",
+    "stylesKicker": "Sistema de diseño",
+    "stylesTitle": "Mismo código, otra piel",
+    "stylesLead": "Pulsa un estilo y toda la web —incluidas las demos— cambia al instante. El HTML no se toca: solo cambian los tokens de diseño (color, radio, sombras, tipografía).",
+    "stylesHint": "También desde el botón «Estilo» flotante, en cualquier página. Comparte un estilo con ?style=brutalism",
+    "demosKicker": "Demos",
+    "demosTitle": "Verticales funcionales",
+    "open": "Abrir",
+    "projectsKicker": "Proyectos reales",
+    "projectsTitle": "Más allá de la plantilla",
+    "projectsLead": "Una selección de lo que he construido: webs para clientes, apps móviles y proyectos personales en producción."
   },
   "servicios": {
     "metaTitle": "Estudio Norte — Servicios",
@@ -36,7 +52,7 @@
     "heroText": "Estudio de ejemplo para la plantilla. Sustituye este texto por el del cliente.",
     "heroCta": "Pide presupuesto",
     "servicesTitle": "Servicios",
-    "pricingTitle": "Precios",
+    "pricingTitle": "Precios orientativos",
     "aboutTitle": "Sobre nosotros",
     "aboutText": "Texto editorial de ejemplo sobre el negocio, su historia y su forma de trabajar.",
     "contactTitle": "Contacto",
@@ -47,11 +63,15 @@
     "formSent": "¡Gracias! Te respondemos pronto.",
     "popular": "Más elegido",
     "whyTitle": "Por qué elegirnos",
-    "choose": "Elegir plan",
+    "choose": "Solicitar valoración",
     "locationTitle": "Dónde estamos",
     "directions": "Cómo llegar",
     "testimonialsTitle": "Lo que dicen",
-    "perfBadge": "Lighthouse 100 · carga <1s"
+    "perfBadge": "Lighthouse 100 · carga <1s",
+    "pricingLead": "Rangos de referencia para que te hagas una idea. Cada proyecto es distinto.",
+    "priceFrom": "Desde",
+    "pricingNote": "Precios orientativos, no cerrados. El presupuesto final se define tras una valoración de tu proyecto: alcance, contenidos e integraciones.",
+    "navPricing": "Precios"
   },
   "budget": {
     "title": "Pide presupuesto",
@@ -90,7 +110,14 @@
     "promptToRegister": "¿Primera vez por aquí?",
     "ctaToRegister": "Crear cuenta",
     "promptToLogin": "¿Ya tienes cuenta?",
-    "ctaToLogin": "Iniciar sesión"
+    "ctaToLogin": "Iniciar sesión",
+    "loginEyebrow": "Área privada",
+    "loginSub": "Accede al panel para gestionar citas y productos.",
+    "registerEyebrow": "Nueva cuenta",
+    "registerSub": "Crea tu cuenta en menos de un minuto.",
+    "or": "o",
+    "demoLabel": "Prueba:",
+    "demoPassword": "· contraseña: demo"
   },
   "reservas": {
     "metaTitle": "Reserva tu cita — Estudio Norte",
@@ -156,5 +183,92 @@
     "settingsHint": "Estas opciones las elige el cliente para su web.",
     "darkMode": "Modo oscuro",
     "font": "Tipografía"
+  },
+  "styles": {
+    "dockLabel": "Estilo",
+    "dockTitle": "Estilo visual",
+    "dark": "Modo oscuro",
+    "darkOnly": "Neofuturismo es siempre oscuro",
+    "darkOnlyShort": "SIEMPRE",
+    "apply": "Aplicar estilo",
+    "active": "Activo",
+    "sampleCard": "Reserva tu cita",
+    "sampleInput": "tu@email.com",
+    "sampleCta": "Reservar",
+    "swiss": {
+      "short": "Funcional, editorial",
+      "desc": "Funcional y editorial: retícula, filetes finos y cero ornamento. El contenido manda.",
+      "traits": "Filetes 1px · radio 2px · sin sombras"
+    },
+    "brutalism": {
+      "short": "Crudo y ruidoso",
+      "desc": "Crudo y honesto: bordes gruesos, sombras duras desplazadas y tipografía negra en mayúsculas.",
+      "traits": "Bordes 3px · sombra offset · radio 0"
+    },
+    "neofuturism": {
+      "short": "Neón y ciencia ficción",
+      "desc": "Interfaz de ciencia ficción: oscuro, brillos neón cian/magenta, esquinas biseladas y scanlines.",
+      "traits": "Glow · clip-path · siempre oscuro"
+    },
+    "glassmorphism": {
+      "short": "Cristal esmerilado",
+      "desc": "Paneles de cristal esmerilado flotando sobre una malla de color viva.",
+      "traits": "backdrop-filter · translúcido · píldoras"
+    },
+    "neumorphism": {
+      "short": "Relieve suave",
+      "desc": "Soft UI: una sola superficie y todo en relieve o hundido con sombras de luz y sombra.",
+      "traits": "Sombras dobles · sin bordes · inset"
+    },
+    "bento": {
+      "short": "Módulos tipo keynote",
+      "desc": "Módulos grandes y redondeados en retícula asimétrica, calma de keynote.",
+      "traits": "Radio 28px · spans asimétricos · píldoras"
+    }
+  },
+  "projects": {
+    "visit": "Visitar",
+    "private": "Privado",
+    "kind": {
+      "web": "Web",
+      "mobile": "App móvil",
+      "client": "Cliente"
+    },
+    "portfolio": {
+      "name": "Portfolio personal",
+      "desc": "Landing estilo terminal con chatbot IA en streaming, i18n ES/EN, mapa de viajes con Leaflet y CI con presupuesto de Lighthouse."
+    },
+    "clinica": {
+      "name": "Ū Medicina Estética",
+      "desc": "Web de clínica con tratamientos, equipo, blog y cita por WhatsApp; panel de gestión con acceso sin contraseña (código por email) y tienda Shopify de dermocosmética."
+    },
+    "boda": {
+      "name": "Web de boda",
+      "desc": "SPA con confirmación de asistencia por invitado (alergias, dedicatoria, autobuses por tramo) y panel privado para gestionar invitados, textos y colores."
+    },
+    "ironlog": {
+      "name": "IronLog",
+      "desc": "App de entrenamiento: rutinas, series con cronómetro de descanso, panel de progreso (fuerza, volumen por músculo) e import/export CSV y JSON."
+    },
+    "compras": {
+      "name": "Compras",
+      "desc": "Listas de la compra compartidas en pareja con sincronización en tiempo real, 19 categorías, búsqueda, filtros y swipe para borrar."
+    }
+  },
+  "footer": {
+    "ctaKicker": "Contacto",
+    "ctaTitle": "¿Hablamos de tu proyecto?",
+    "ctaLead": "Cuéntame qué necesitas y te preparo una valoración sin compromiso.",
+    "ctaEmail": "Escríbeme",
+    "ctaMeta": "Santander · España",
+    "about": "Desarrollo web a medida para comercios y negocios locales: rápido, accesible y pensado para captar clientes.",
+    "explore": "Explorar",
+    "demos": "Demos",
+    "contact": "Contacto",
+    "language": "Idioma",
+    "styleHint": "El estilo visual se cambia desde el botón flotante «Estilo».",
+    "rights": "Todos los derechos reservados",
+    "built": "Hecho con Next.js · SCSS · next-intl",
+    "toTop": "Volver arriba"
   }
 }

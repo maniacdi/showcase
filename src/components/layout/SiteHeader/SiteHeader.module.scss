@@ -4,8 +4,11 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--paper);
-  border-bottom: 1px solid var(--hairline);
+  background: var(--header-bg);
+  border-bottom: var(--header-border);
+  box-shadow: var(--header-shadow);
+  backdrop-filter: var(--header-backdrop);
+  -webkit-backdrop-filter: var(--header-backdrop);
 }
 .bar {
   display: flex;
@@ -41,8 +44,8 @@
     top: 60px;
     left: 0;
     right: 0;
-    background: var(--paper);
-    border-bottom: 1px solid var(--hairline);
+    background: var(--dialog-bg);
+    border-bottom: var(--header-border);
     padding: var(--s-5) var(--s-4);
   }
   @include md {

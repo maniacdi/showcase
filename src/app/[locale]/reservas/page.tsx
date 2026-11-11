@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/seo";
 import DemoBar from "@/components/layout/DemoBar/DemoBar";
 import SiteFooter from "@/components/layout/SiteFooter/SiteFooter";
 import SiteHeader from "@/components/layout/SiteHeader/SiteHeader";
@@ -13,7 +14,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "reservas" });
-  return { title: t("metaTitle"), description: t("metaDesc") };
+  return {
+    title: t("metaTitle"),
+    description: t("metaDesc"),
+    alternates: alternatesFor("/reservas", locale),
+    openGraph: { title: t("metaTitle"), description: t("metaDesc") },
+  };
 }
 
 export default async function ReservasPage({

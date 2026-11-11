@@ -1,3 +1,5 @@
+@use "styles/mixins" as *;
+
 .form {
   display: flex;
   flex-direction: column;
@@ -8,13 +10,10 @@
   color: var(--ink-soft);
 }
 .select {
-  font-family: var(--font-sans);
+  font-family: var(--font-style);
   font-size: var(--text-m);
   padding: var(--s-3) var(--s-4);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
-  background: var(--paper);
-  color: var(--ink);
+  @include control;
   width: 100%;
 }
 .sent {

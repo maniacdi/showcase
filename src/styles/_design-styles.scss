@@ -1,0 +1,604 @@
+/* =====================================================================
+   DESIGN STYLES — switchable visual languages.
+
+   <html data-style="…"> (set by PrefsScript/PrefsApplier) picks one. Any
+   element can also carry data-style to render a local preview (the hub's
+   style gallery does this), because every block below ONLY sets custom
+   properties and those inherit from the nearest ancestor.
+
+   Rule: components never branch on the style. They read tokens through the
+   mixins in _mixins.scss (surface, tile, control) and the globals.
+
+   Blocks also match [data-theme] descendants so derived tokens get
+   recomputed against ThemeProvider's per-vertical --accent.
+   ===================================================================== */
+
+@mixin define($name, $root: false) {
+  @if $root {
+    /* The default block resets the FULL contract on every [data-style] so a
+       local preview never inherits derived tokens from the page's style. */
+    :root,
+    [data-style],
+    [data-style] [data-theme] {
+      @content;
+    }
+  } @else {
+    [data-style="#{$name}"],
+    [data-style="#{$name}"] [data-theme] {
+      @content;
+    }
+  }
+}
+
+@mixin define-dark($name) {
+  [data-color-scheme="dark"][data-style="#{$name}"],
+  [data-color-scheme="dark"] [data-style="#{$name}"],
+  [data-color-scheme="dark"][data-style="#{$name}"] [data-theme],
+  [data-color-scheme="dark"] [data-style="#{$name}"] [data-theme] {
+    @content;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   SWISS (default) — the original look. Also the full token contract:
+   every other style overrides a subset of these.
+   --------------------------------------------------------------------- */
+@include define("swiss", $root: true) {
+  --paper: #fafaf9;
+  --paper-2: #f2f1ee;
+  --ink: #16181d;
+  --ink-soft: #5b5f66;
+  --hairline: #e5e4e0;
+  --accent: #1f4fff;
+  --accent-ink: #ffffff;
+  --radius: 2px;
+  --shadow-overlay: 0 8px 30px rgba(22, 24, 29, 0.12);
+
+  /* page */
+  --page-bg: var(--paper);
+  --page-bg-attach: scroll;
+  --surface: var(--paper);
+  --surface-alt: var(--paper-2);
+
+  /* cards */
+  --card-border: 1px solid var(--hairline);
+  --card-radius: var(--radius);
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --card-hover-transform: translateY(-3px);
+  --card-hover-border: var(--ink);
+  --card-backdrop: none;
+
+  /* tiles: open list items in Swiss (fallbacks live in the mixin) */
+  --tile-bg: transparent;
+  --tile-border: 0 solid transparent;
+  --tile-top: initial;
+  --tile-radius: 0;
+  --tile-shadow: none;
+  --tile-pad: initial;
+  --services-cols: 3;
+  --feature-row: auto;
+  --tile-gap: 0;
+
+  /* controls */
+  --ctl-radius: var(--radius);
+  --input-bg: var(--paper);
+  --input-border: 1px solid var(--hairline);
+  --input-shadow: none;
+
+  /* buttons */
+  --btn-radius: var(--radius);
+  --btn-border-w: 1px;
+  --btn-weight: 600;
+  --btn-tracking: 0.01em;
+  --btn-transform: none;
+  --btn-shadow: none;
+  --btn-shadow-hover: none;
+  --btn-hover-transform: none;
+  --btn-clip: none;
+  --btn-filter: brightness(1);
+  --btn-solid-bg: var(--accent);
+  --btn-solid-ink: var(--accent-ink);
+  --btn-solid-border: transparent;
+  --btn-outline-bg: transparent;
+  --btn-outline-border: var(--ink);
+  --btn-outline-hover-bg: var(--ink);
+  --btn-outline-hover-ink: var(--paper);
+
+  /* type */
+  --font-style: var(--font-sans);
+  --font-display: var(--font-style);
+  --display-weight: 700;
+  --display-transform: none;
+  --display-tracking: var(--tracking-tight);
+  --display-glow: none;
+
+  /* chrome */
+  --header-bg: var(--paper);
+  --header-border: 1px solid var(--hairline);
+  --header-backdrop: none;
+  --header-shadow: none;
+  --section-border: 1px solid var(--hairline);
+  --grid-line: var(--hairline);
+  --hero-fade: var(--paper);
+  --dialog-bg: var(--paper);
+  --overlay-bg: rgba(22, 24, 29, 0.45);
+  --overlay-backdrop: none;
+
+  /* auth side panel (/login) */
+  --auth-panel-bg: var(--accent);
+  --auth-panel-ink: var(--accent-ink);
+  --auth-panel-mark: var(--accent-ink);
+  --auth-panel-line: rgba(255, 255, 255, 0.16);
+  --auth-panel-inset: 0px;
+  --auth-panel-radius: 0;
+  --auth-panel-border: 0 solid transparent;
+  --auth-panel-shadow: none;
+}
+
+@include define-dark("swiss") {
+  --paper: #14161a;
+  --paper-2: #1b1e24;
+  --ink: #f3f2ef;
+  --ink-soft: #a4a8b0;
+  --hairline: #2c2f36;
+}
+
+/* ---------------------------------------------------------------------
+   BRUTALISM — raw, loud, honest. Thick ink borders, hard offset shadows,
+   zero radius, uppercase black display type, one screaming accent.
+   --------------------------------------------------------------------- */
+@include define("brutalism") {
+  --paper: #f4efe1;
+  --paper-2: #ffd84d;
+  --paper-3: #ffffff;
+  --ink: #0a0a0a;
+  --ink-soft: #2e2e2e;
+  --hairline: #0a0a0a;
+  --accent: #ff4f00 !important;
+  --accent-ink: #0a0a0a !important;
+  --radius: 0;
+  --shadow-overlay: 8px 8px 0 var(--ink);
+
+  --page-bg: radial-gradient(rgba(10, 10, 10, 0.16) 1px, transparent 1.2px) 0 0 / 22px 22px,
+    var(--paper);
+  --surface: var(--paper-3);
+  --surface-alt: var(--paper-2);
+
+  --card-border: 3px solid var(--ink);
+  --card-radius: 0;
+  --card-shadow: 6px 6px 0 var(--ink);
+  --card-shadow-hover: 10px 10px 0 var(--ink);
+  --card-hover-transform: translate(-4px, -4px);
+  --card-hover-border: var(--ink);
+
+  --tile-bg: var(--paper-3);
+  --tile-border: 3px solid var(--ink);
+  --tile-top: 3px solid var(--ink);
+  --tile-shadow: 6px 6px 0 var(--ink);
+  --tile-pad: var(--s-5);
+  --services-cols: 2;
+  --feature-row: span 2;
+  --tile-gap: var(--s-5);
+
+  --ctl-radius: 0;
+  --input-bg: var(--paper-3);
+  --input-border: 3px solid var(--ink);
+  --input-shadow: 4px 4px 0 var(--ink);
+
+  --btn-radius: 0;
+  --btn-border-w: 3px;
+  --btn-weight: 800;
+  --btn-tracking: 0.06em;
+  --btn-transform: uppercase;
+  --btn-shadow: 4px 4px 0 var(--ink);
+  --btn-shadow-hover: 1px 1px 0 var(--ink);
+  --btn-hover-transform: translate(3px, 3px);
+  --btn-solid-border: var(--ink);
+  --btn-outline-bg: var(--paper-3);
+  --btn-outline-border: var(--ink);
+  --btn-outline-hover-bg: var(--paper-2);
+  --btn-outline-hover-ink: var(--ink);
+
+  --font-style: var(--font-space), system-ui, sans-serif;
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+  --display-weight: 900;
+  --display-transform: uppercase;
+  --display-tracking: -0.035em;
+
+  --header-bg: var(--paper-2);
+  --header-border: 3px solid var(--ink);
+  --section-border: 3px solid var(--ink);
+  --grid-line: rgba(10, 10, 10, 0.1);
+  --hero-fade: transparent;
+  --dialog-bg: var(--paper-3);
+  --overlay-bg: rgba(10, 10, 10, 0.55);
+
+  --auth-panel-bg: var(--accent);
+  --auth-panel-ink: #0a0a0a;
+  --auth-panel-mark: #0a0a0a;
+  --auth-panel-line: rgba(10, 10, 10, 0.16);
+  --auth-panel-inset: var(--s-5);
+  --auth-panel-border: 3px solid #0a0a0a;
+  --auth-panel-shadow: 10px 10px 0 #0a0a0a;
+}
+
+@include define-dark("brutalism") {
+  --paper: #111111;
+  --paper-2: #2a2414;
+  --paper-3: #1b1b1b;
+  --ink: #f4efe1;
+  --ink-soft: #cfc8b6;
+  --hairline: #f4efe1;
+  --page-bg: radial-gradient(rgba(244, 239, 225, 0.12) 1px, transparent 1.2px) 0 0 / 22px 22px,
+    var(--paper);
+  --btn-outline-hover-bg: #ff4f00;
+  --btn-outline-hover-ink: #0a0a0a;
+}
+
+/* ---------------------------------------------------------------------
+   NEOFUTURISM — always dark. Neon cyan/magenta glow, chamfered buttons,
+   scanlines, wide uppercase display face. Ignores light mode on purpose.
+   --------------------------------------------------------------------- */
+@include define("neofuturism") {
+  --paper: #07080d;
+  --paper-2: #0c0e16;
+  --ink: #e6f7ff;
+  --ink-soft: #8696ab;
+  --hairline: rgba(0, 240, 255, 0.16);
+  --accent: #00f0ff !important;
+  --accent-ink: #00141a !important;
+  --accent-2: #ff2bd6;
+  --radius: 0;
+  --shadow-overlay: 0 0 48px rgba(0, 240, 255, 0.22);
+
+  --page-bg: radial-gradient(60% 45% at 12% -8%, rgba(0, 240, 255, 0.18), transparent 70%),
+    radial-gradient(45% 40% at 96% 4%, rgba(255, 43, 214, 0.16), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(0, 240, 255, 0.035) 0 1px, transparent 1px 4px),
+    var(--paper);
+  --page-bg-attach: fixed;
+  --surface: linear-gradient(160deg, rgba(0, 240, 255, 0.07), rgba(255, 255, 255, 0.015) 60%);
+  --surface-alt: rgba(0, 240, 255, 0.025);
+
+  --card-border: 1px solid rgba(0, 240, 255, 0.28);
+  --card-radius: 0;
+  --card-shadow: inset 0 1px 0 rgba(0, 240, 255, 0.18);
+  --card-shadow-hover: 0 0 32px rgba(0, 240, 255, 0.25), inset 0 0 22px rgba(0, 240, 255, 0.08);
+  --card-hover-transform: translateY(-2px);
+  --card-hover-border: var(--accent);
+  --card-backdrop: blur(6px);
+
+  --tile-bg: var(--surface);
+  --tile-border: 1px solid rgba(0, 240, 255, 0.22);
+  --tile-top: 2px solid var(--accent);
+  --tile-shadow: none;
+  --tile-pad: var(--s-5);
+  --services-cols: 3;
+  --feature-row: auto;
+  --tile-gap: var(--s-5);
+
+  --ctl-radius: 0;
+  --input-bg: rgba(0, 240, 255, 0.04);
+  --input-border: 1px solid rgba(0, 240, 255, 0.32);
+
+  --btn-radius: 0;
+  --btn-weight: 700;
+  --btn-tracking: 0.16em;
+  --btn-transform: uppercase;
+  --btn-clip: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  --btn-filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.45));
+  --btn-hover-transform: translateY(-1px);
+  --btn-outline-bg: rgba(0, 240, 255, 0.06);
+  --btn-outline-border: var(--accent);
+  --btn-outline-hover-bg: var(--accent);
+  --btn-outline-hover-ink: var(--accent-ink);
+
+  --font-style: var(--font-space), system-ui, sans-serif;
+  --font-display: var(--font-unbounded), system-ui, sans-serif;
+  --display-weight: 600;
+  --display-transform: uppercase;
+  --display-tracking: 0.01em;
+  --display-glow: 0 0 24px rgba(0, 240, 255, 0.35);
+
+  --header-bg: rgba(7, 8, 13, 0.72);
+  --header-border: 1px solid rgba(0, 240, 255, 0.2);
+  --header-backdrop: blur(14px);
+  --section-border: 1px solid rgba(0, 240, 255, 0.1);
+  --grid-line: rgba(0, 240, 255, 0.09);
+  --hero-fade: transparent;
+  --dialog-bg: #0b0d15;
+  --overlay-bg: rgba(0, 0, 0, 0.7);
+  --overlay-backdrop: blur(4px);
+
+  --auth-panel-bg: radial-gradient(70% 55% at 85% 15%, rgba(255, 43, 214, 0.28), transparent 70%),
+    radial-gradient(70% 60% at 10% 90%, rgba(0, 240, 255, 0.24), transparent 70%), #04050a;
+  --auth-panel-ink: var(--ink);
+  --auth-panel-mark: var(--accent);
+  --auth-panel-line: rgba(0, 240, 255, 0.1);
+  --auth-panel-border: 1px solid rgba(0, 240, 255, 0.28);
+  --auth-panel-shadow: inset 0 0 80px rgba(0, 240, 255, 0.08);
+}
+
+/* ---------------------------------------------------------------------
+   GLASSMORPHISM — frosted translucent panes floating over a vivid
+   gradient mesh. Blur + saturate, hairline light borders, pill buttons.
+   --------------------------------------------------------------------- */
+@include define("glassmorphism") {
+  --paper: #eef0fb;
+  --paper-2: rgba(255, 255, 255, 0.3);
+  --ink: #1b1630;
+  --ink-soft: #4d4770;
+  --hairline: rgba(255, 255, 255, 0.6);
+  --glass: rgba(255, 255, 255, 0.42);
+  --glass-edge: rgba(255, 255, 255, 0.7);
+  --blob-1: #c4b5fd;
+  --blob-2: #f9a8d4;
+  --blob-3: #7dd3fc;
+  --blob-4: #fde68a;
+  --accent: #6d28d9 !important;
+  --accent-ink: #ffffff !important;
+  --radius: 14px;
+  --shadow-overlay: 0 24px 64px rgba(31, 38, 135, 0.25);
+
+  --page-bg: radial-gradient(40% 50% at 8% 10%, var(--blob-1), transparent 70%),
+    radial-gradient(36% 46% at 94% 16%, var(--blob-2), transparent 70%),
+    radial-gradient(46% 50% at 62% 96%, var(--blob-3), transparent 70%),
+    radial-gradient(28% 30% at 26% 72%, var(--blob-4), transparent 70%), var(--paper);
+  --page-bg-attach: fixed;
+  --surface: var(--glass);
+  --surface-alt: rgba(255, 255, 255, 0.16);
+
+  --card-border: 1px solid var(--glass-edge);
+  --card-radius: 22px;
+  --card-shadow: 0 8px 32px rgba(31, 38, 135, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  --card-shadow-hover: 0 18px 48px rgba(31, 38, 135, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --card-hover-transform: translateY(-4px);
+  --card-hover-border: var(--glass-edge);
+  --card-backdrop: blur(18px) saturate(160%);
+
+  --tile-bg: var(--glass);
+  --tile-border: 1px solid var(--glass-edge);
+  --tile-top: 1px solid var(--glass-edge);
+  --tile-radius: 22px;
+  --tile-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  --tile-pad: var(--s-5);
+  --services-cols: 3;
+  --feature-row: auto;
+  --tile-gap: var(--s-5);
+
+  --ctl-radius: 12px;
+  --input-bg: rgba(255, 255, 255, 0.5);
+  --input-border: 1px solid var(--glass-edge);
+
+  --btn-radius: 999px;
+  --btn-shadow: 0 6px 20px rgba(109, 40, 217, 0.32);
+  --btn-shadow-hover: 0 10px 28px rgba(109, 40, 217, 0.45);
+  --btn-hover-transform: translateY(-1px);
+  --btn-outline-bg: rgba(255, 255, 255, 0.35);
+  --btn-outline-border: var(--glass-edge);
+  --btn-outline-hover-bg: rgba(255, 255, 255, 0.7);
+  --btn-outline-hover-ink: var(--ink);
+
+  --font-style: var(--font-jakarta), system-ui, sans-serif;
+  --font-display: var(--font-jakarta), system-ui, sans-serif;
+  --display-weight: 700;
+  --display-tracking: -0.035em;
+
+  --header-bg: rgba(255, 255, 255, 0.32);
+  --header-border: 1px solid rgba(255, 255, 255, 0.5);
+  --header-backdrop: blur(20px) saturate(160%);
+  --section-border: 0 solid transparent;
+  --grid-line: rgba(255, 255, 255, 0.45);
+  --hero-fade: transparent;
+  --dialog-bg: rgba(255, 255, 255, 0.8);
+  --overlay-bg: rgba(30, 20, 60, 0.22);
+  --overlay-backdrop: blur(8px);
+
+  --auth-panel-bg: radial-gradient(60% 50% at 80% 10%, rgba(255, 255, 255, 0.35), transparent 70%),
+    linear-gradient(140deg, #7c3aed 0%, #db2777 55%, #0ea5e9 100%);
+  --auth-panel-ink: #ffffff;
+  --auth-panel-mark: #ffffff;
+  --auth-panel-line: rgba(255, 255, 255, 0.12);
+  --auth-panel-inset: var(--s-4);
+  --auth-panel-radius: 32px;
+  --auth-panel-border: 1px solid rgba(255, 255, 255, 0.5);
+  --auth-panel-shadow: 0 24px 60px rgba(31, 38, 135, 0.3);
+}
+
+@include define-dark("glassmorphism") {
+  --paper: #0c0a1d;
+  --paper-2: rgba(255, 255, 255, 0.04);
+  --ink: #f1eefe;
+  --ink-soft: #b6afd6;
+  --hairline: rgba(255, 255, 255, 0.12);
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --blob-1: #5b21b6;
+  --blob-2: #9d174d;
+  --blob-3: #0369a1;
+  --blob-4: #3730a3;
+  --accent: #a78bfa !important;
+  --accent-ink: #160f2e !important;
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --header-bg: rgba(12, 10, 29, 0.45);
+  --dialog-bg: rgba(24, 20, 48, 0.88);
+  --btn-outline-bg: rgba(255, 255, 255, 0.06);
+  --btn-outline-hover-bg: rgba(255, 255, 255, 0.14);
+}
+
+/* ---------------------------------------------------------------------
+   NEUMORPHISM — soft UI. One monochrome surface, everything extruded or
+   pressed via paired light/dark shadows. No borders. Rounded type.
+   --------------------------------------------------------------------- */
+@include define("neumorphism") {
+  --paper: #e4e9f0;
+  --paper-2: #e4e9f0;
+  --ink: #2d3440;
+  --ink-soft: #667085;
+  --hairline: #cfd6e0;
+  --neu-dark: #bec6d1;
+  --neu-light: #ffffff;
+  --accent: #5b6cff !important;
+  --accent-ink: #ffffff !important;
+  --radius: 14px;
+  --shadow-overlay: 18px 18px 40px var(--neu-dark), -18px -18px 40px var(--neu-light);
+
+  --page-bg: var(--paper);
+  --surface: var(--paper);
+  --surface-alt: var(--paper);
+
+  --card-border: 0 solid transparent;
+  --card-radius: 24px;
+  --card-shadow: 9px 9px 18px var(--neu-dark), -9px -9px 18px var(--neu-light);
+  --card-shadow-hover: 14px 14px 28px var(--neu-dark), -14px -14px 28px var(--neu-light);
+  --card-hover-transform: translateY(-2px);
+  --card-hover-border: transparent;
+
+  --tile-bg: var(--paper);
+  --tile-border: 0 solid transparent;
+  --tile-top: 0 solid transparent;
+  --tile-radius: 24px;
+  --tile-shadow: 9px 9px 18px var(--neu-dark), -9px -9px 18px var(--neu-light);
+  --tile-pad: var(--s-6);
+  --services-cols: 3;
+  --feature-row: auto;
+  --tile-gap: var(--s-5);
+
+  --ctl-radius: 14px;
+  --input-bg: var(--paper);
+  --input-border: 0 solid transparent;
+  --input-shadow: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+
+  --btn-radius: 14px;
+  --btn-border-w: 0;
+  --btn-weight: 800;
+  --btn-shadow: 6px 6px 12px var(--neu-dark), -6px -6px 12px var(--neu-light);
+  --btn-shadow-hover: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --btn-solid-bg: var(--paper);
+  --btn-solid-ink: var(--accent);
+  --btn-outline-bg: var(--paper);
+  --btn-outline-border: transparent;
+  --btn-outline-hover-bg: var(--paper);
+  --btn-outline-hover-ink: var(--accent);
+
+  --font-style: var(--font-nunito), system-ui, sans-serif;
+  --font-display: var(--font-nunito), system-ui, sans-serif;
+  --display-weight: 800;
+  --display-tracking: -0.02em;
+
+  --header-bg: var(--paper);
+  --header-border: 0 solid transparent;
+  --header-shadow: 0 6px 18px rgba(163, 177, 198, 0.35);
+  --section-border: 0 solid transparent;
+  --grid-line: rgba(163, 177, 198, 0.22);
+  --hero-fade: var(--paper);
+  --dialog-bg: var(--paper);
+  --overlay-bg: rgba(45, 52, 64, 0.25);
+  --overlay-backdrop: blur(3px);
+
+  --auth-panel-bg: var(--paper);
+  --auth-panel-ink: var(--ink);
+  --auth-panel-mark: var(--accent);
+  --auth-panel-line: rgba(163, 177, 198, 0.22);
+  --auth-panel-inset: var(--s-5);
+  --auth-panel-radius: 36px;
+  --auth-panel-shadow: 14px 14px 30px var(--neu-dark), -14px -14px 30px var(--neu-light);
+}
+
+@include define-dark("neumorphism") {
+  --paper: #262b33;
+  --paper-2: #262b33;
+  --ink: #e6e9ef;
+  --ink-soft: #9aa3b2;
+  --hairline: #343a44;
+  --neu-dark: #1b1f25;
+  --neu-light: #313741;
+  --accent: #8b97ff !important;
+  --header-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------------------------------------------------------------------
+   BENTO GRID — modular, Apple-keynote calm. Big rounded tiles on a soft
+   gray canvas, asymmetric spans, black pill buttons, tight display type.
+   --------------------------------------------------------------------- */
+@include define("bento") {
+  --paper: #f1f1ee;
+  --paper-2: #f1f1ee;
+  --paper-3: #ffffff;
+  --ink: #111214;
+  --ink-soft: #5f636b;
+  --hairline: rgba(17, 18, 20, 0.08);
+  --radius: 12px;
+  --shadow-overlay: 0 30px 80px -20px rgba(0, 0, 0, 0.3);
+
+  --page-bg: var(--paper);
+  --surface: var(--paper-3);
+  --surface-alt: transparent;
+
+  --card-border: 1px solid var(--hairline);
+  --card-radius: 28px;
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 22px 44px -16px rgba(0, 0, 0, 0.2);
+  --card-hover-transform: translateY(-4px);
+  --card-hover-border: var(--hairline);
+
+  --tile-bg: var(--paper-3);
+  --tile-border: 1px solid var(--hairline);
+  --tile-top: 1px solid var(--hairline);
+  --tile-radius: 28px;
+  --tile-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --tile-pad: var(--s-6);
+  --services-cols: 2;
+  --feature-row: span 2;
+  --tile-gap: var(--s-5);
+
+  --ctl-radius: 14px;
+  --input-bg: var(--paper-3);
+  --input-border: 1px solid var(--hairline);
+
+  --btn-radius: 999px;
+  --btn-solid-bg: var(--ink);
+  --btn-solid-ink: var(--paper-3);
+  --btn-hover-transform: scale(1.02);
+  --btn-outline-bg: var(--paper-3);
+  --btn-outline-border: var(--hairline);
+  --btn-outline-hover-bg: var(--ink);
+  --btn-outline-hover-ink: var(--paper-3);
+
+  --font-style: var(--font-jakarta), system-ui, sans-serif;
+  --font-display: var(--font-jakarta), system-ui, sans-serif;
+  --display-weight: 700;
+  --display-tracking: -0.045em;
+
+  --header-bg: rgba(241, 241, 238, 0.82);
+  --header-border: 1px solid transparent;
+  --header-backdrop: blur(14px);
+  --section-border: 0 solid transparent;
+  --grid-line: rgba(17, 18, 20, 0.05);
+  --hero-fade: var(--paper);
+  --dialog-bg: var(--paper-3);
+  --overlay-bg: rgba(17, 18, 20, 0.35);
+  --overlay-backdrop: blur(6px);
+
+  --auth-panel-bg: var(--ink);
+  --auth-panel-ink: var(--paper-3);
+  --auth-panel-mark: var(--accent);
+  --auth-panel-line: rgba(255, 255, 255, 0.07);
+  --auth-panel-inset: var(--s-4);
+  --auth-panel-radius: 32px;
+}
+
+@include define-dark("bento") {
+  --paper: #0c0c0e;
+  --paper-2: #0c0c0e;
+  --paper-3: #18181b;
+  --ink: #f4f4f5;
+  --ink-soft: #a1a1aa;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --header-bg: rgba(12, 12, 14, 0.82);
+}
+
+/* Neofuturism is dark-only: tell the UA so native controls match. */
+html[data-style="neofuturism"] {
+  color-scheme: dark;
+}

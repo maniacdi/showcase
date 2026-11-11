@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/seo";
 import ThemeProvider from "@/themes/ThemeProvider";
 import DemoBar from "@/components/layout/DemoBar/DemoBar";
 import SiteHeader from "@/components/layout/SiteHeader/SiteHeader";
@@ -20,7 +21,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "servicios" });
-  return { title: t("metaTitle"), description: t("metaDesc") };
+  return {
+    title: t("metaTitle"),
+    description: t("metaDesc"),
+    alternates: alternatesFor("/servicios", locale),
+    openGraph: { title: t("metaTitle"), description: t("metaDesc") },
+  };
 }
 
 export default async function ServiciosPage({
@@ -51,7 +57,7 @@ export default async function ServiciosPage({
         nav={[
           { href: "/servicios#servicios", label: t("servicesTitle") },
           { href: "/servicios#por-que", label: t("whyTitle") },
-          { href: "/servicios#precios", label: t("pricingTitle") },
+          { href: "/servicios#precios", label: t("navPricing") },
         ]}
         cta={{ href: "/servicios#contacto", label: t("contactTitle") }}
       />
@@ -122,12 +128,16 @@ export default async function ServiciosPage({
         <Section id="precios" alt>
           <Container>
             <SectionHead title={t("pricingTitle")} />
+            <p className={styles.pricingLead}>{t("pricingLead")}</p>
             <div className={styles.plans}>
               {plans.map((p) => (
                 <div key={p.name} className={`${styles.plan} ${p.popular ? styles.popular : ""}`}>
                   {p.popular && <span className={styles.popularTag}>{t("popular")}</span>}
                   <h3 className={styles.planName}>{p.name}</h3>
-                  <p className={styles.planPrice}>{p.price}</p>
+                  <p className={styles.planPrice}>
+                    <span className={styles.planFrom}>{t("priceFrom")}</span>
+                    {p.price}
+                  </p>
                   <ul className={styles.planFeatures}>
                     {p.features.map((f) => (
                       <li key={f}>{f}</li>
@@ -143,6 +153,9 @@ export default async function ServiciosPage({
                 </div>
               ))}
             </div>
+            <p className={styles.pricingNote} role="note">
+              {t("pricingNote")}
+            </p>
           </Container>
         </Section>
 

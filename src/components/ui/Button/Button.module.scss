@@ -1,45 +1,62 @@
+/* All look-and-feel comes from design-style tokens (styles/_design-styles.scss). */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--s-2);
   padding: var(--s-3) var(--s-5);
-  font-family: var(--font-sans);
+  font-family: var(--font-style);
   font-size: var(--text-s);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  border: 1px solid transparent;
-  border-radius: var(--radius);
+  font-weight: var(--btn-weight);
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--btn-transform);
+  border: var(--btn-border-w) solid transparent;
+  border-radius: var(--btn-radius);
+  box-shadow: var(--btn-shadow);
+  clip-path: var(--btn-clip);
+  filter: var(--btn-filter);
   cursor: pointer;
   text-decoration: none;
   transition:
     background 0.15s ease,
     color 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease,
+    filter 0.15s ease;
+}
+.btn:hover:not(:disabled) {
+  transform: var(--btn-hover-transform);
+  box-shadow: var(--btn-shadow-hover);
+  text-decoration: none;
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 .solid {
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--btn-solid-bg);
+  color: var(--btn-solid-ink);
+  border-color: var(--btn-solid-border);
 }
-.solid:hover {
-  filter: brightness(0.94);
-  text-decoration: none;
+.solid:hover:not(:disabled) {
+  filter: var(--btn-filter) brightness(0.94);
 }
 .outline {
-  background: transparent;
+  background: var(--btn-outline-bg);
   color: var(--ink);
-  border-color: var(--ink);
+  border-color: var(--btn-outline-border);
 }
-.outline:hover {
-  background: var(--ink);
-  color: var(--paper);
-  text-decoration: none;
+.outline:hover:not(:disabled) {
+  background: var(--btn-outline-hover-bg);
+  color: var(--btn-outline-hover-ink);
 }
 .ghost {
   background: transparent;
   color: var(--ink);
+  box-shadow: none;
 }
-.ghost:hover {
-  background: var(--paper-2);
-  text-decoration: none;
+.ghost:hover:not(:disabled) {
+  background: var(--surface-alt);
+  box-shadow: none;
 }

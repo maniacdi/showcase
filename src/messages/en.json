@@ -15,7 +15,7 @@
   },
   "hub": {
     "title": "Showcase",
-    "subtitle": "A clean base for business websites. Pick a demo.",
+    "subtitle": "One codebase, six visual languages and real projects.",
     "seoLead": "Custom web development demos for shops and local businesses: online stores, websites for clinics and restaurants, appointment booking systems and admin dashboards. Fast, accessible, SEO-optimized websites built with Next.js.",
     "disclaimer": "These demos are functional wireframes, not the final design. Every project is tailored to each client's identity, content and needs.",
     "disclaimerTag": "Note",
@@ -27,7 +27,23 @@
     "reservasDesc": "Calendar and appointment booking.",
     "admin": "Admin panel",
     "adminDesc": "Management behind login.",
-    "soon": "Coming soon"
+    "soon": "Coming soon",
+    "kicker": "Javi García Magaldi · Web development",
+    "ctaStyles": "Try the styles",
+    "ctaDemos": "See demos",
+    "statStyles": "Styles",
+    "statDemos": "Demos",
+    "statProjects": "Projects",
+    "stylesKicker": "Design system",
+    "stylesTitle": "Same code, new skin",
+    "stylesLead": "Pick a style and the whole site —demos included— changes instantly. The HTML stays the same: only the design tokens change (color, radius, shadows, type).",
+    "stylesHint": "Also from the floating “Style” button on any page. Share a style with ?style=brutalism",
+    "demosKicker": "Demos",
+    "demosTitle": "Working verticals",
+    "open": "Open",
+    "projectsKicker": "Real projects",
+    "projectsTitle": "Beyond the template",
+    "projectsLead": "A selection of what I've built: client websites, mobile apps and personal projects in production."
   },
   "servicios": {
     "metaTitle": "Estudio Norte — Services",
@@ -36,7 +52,7 @@
     "heroText": "Sample studio for the template. Replace this copy with the client's.",
     "heroCta": "Get a quote",
     "servicesTitle": "Services",
-    "pricingTitle": "Pricing",
+    "pricingTitle": "Indicative pricing",
     "aboutTitle": "About us",
     "aboutText": "Sample editorial copy about the business, its story and how it works.",
     "contactTitle": "Contact",
@@ -47,11 +63,15 @@
     "formSent": "Thanks! We'll get back to you soon.",
     "popular": "Most chosen",
     "whyTitle": "Why choose us",
-    "choose": "Choose plan",
+    "choose": "Request a quote",
     "locationTitle": "Where we are",
     "directions": "Get directions",
     "testimonialsTitle": "What they say",
-    "perfBadge": "Lighthouse 100 · <1s load"
+    "perfBadge": "Lighthouse 100 · <1s load",
+    "pricingLead": "Reference ranges to give you an idea. Every project is different.",
+    "priceFrom": "From",
+    "pricingNote": "Indicative prices, not fixed. The final quote is set after assessing your project: scope, content and integrations.",
+    "navPricing": "Pricing"
   },
   "budget": {
     "title": "Request a quote",
@@ -90,7 +110,14 @@
     "promptToRegister": "First time here?",
     "ctaToRegister": "Create account",
     "promptToLogin": "Already have an account?",
-    "ctaToLogin": "Sign in"
+    "ctaToLogin": "Sign in",
+    "loginEyebrow": "Private area",
+    "loginSub": "Sign in to manage bookings and products.",
+    "registerEyebrow": "New account",
+    "registerSub": "Create your account in under a minute.",
+    "or": "or",
+    "demoLabel": "Try:",
+    "demoPassword": "· password: demo"
   },
   "reservas": {
     "metaTitle": "Book an appointment — Estudio Norte",
@@ -156,5 +183,92 @@
     "settingsHint": "The client picks these options for their site.",
     "darkMode": "Dark mode",
     "font": "Typography"
+  },
+  "styles": {
+    "dockLabel": "Style",
+    "dockTitle": "Visual style",
+    "dark": "Dark mode",
+    "darkOnly": "Neofuturism is always dark",
+    "darkOnlyShort": "ALWAYS",
+    "apply": "Apply style",
+    "active": "Active",
+    "sampleCard": "Book your visit",
+    "sampleInput": "you@email.com",
+    "sampleCta": "Book",
+    "swiss": {
+      "short": "Functional, editorial",
+      "desc": "Functional and editorial: grid, hairlines and zero ornament. Content leads.",
+      "traits": "1px rules · 2px radius · no shadows"
+    },
+    "brutalism": {
+      "short": "Raw and loud",
+      "desc": "Raw and honest: thick borders, hard offset shadows and black uppercase type.",
+      "traits": "3px borders · offset shadow · radius 0"
+    },
+    "neofuturism": {
+      "short": "Neon sci-fi",
+      "desc": "Sci-fi interface: dark, cyan/magenta neon glow, chamfered corners and scanlines.",
+      "traits": "Glow · clip-path · always dark"
+    },
+    "glassmorphism": {
+      "short": "Frosted glass",
+      "desc": "Frosted glass panes floating over a vivid color mesh.",
+      "traits": "backdrop-filter · translucent · pills"
+    },
+    "neumorphism": {
+      "short": "Soft relief",
+      "desc": "Soft UI: one surface, everything extruded or pressed with paired light and dark shadows.",
+      "traits": "Dual shadows · no borders · inset"
+    },
+    "bento": {
+      "short": "Keynote modules",
+      "desc": "Big rounded modules on an asymmetric grid, keynote calm.",
+      "traits": "28px radius · asymmetric spans · pills"
+    }
+  },
+  "projects": {
+    "visit": "Visit",
+    "private": "Private",
+    "kind": {
+      "web": "Web",
+      "mobile": "Mobile app",
+      "client": "Client"
+    },
+    "portfolio": {
+      "name": "Personal portfolio",
+      "desc": "Terminal-style landing with a streamed AI chatbot, ES/EN i18n, Leaflet travel map and CI with a Lighthouse budget."
+    },
+    "clinica": {
+      "name": "Ū Medicina Estética",
+      "desc": "Clinic website with treatments, team, blog and WhatsApp booking; passwordless admin panel (email code) and a Shopify skincare store."
+    },
+    "boda": {
+      "name": "Wedding website",
+      "desc": "SPA with per-guest RSVP (allergies, dedication, bus legs) and a private panel to manage guests, copy and colors."
+    },
+    "ironlog": {
+      "name": "IronLog",
+      "desc": "Training app: routines, sets with rest timer, progress dashboard (strength, volume per muscle) and CSV/JSON import/export."
+    },
+    "compras": {
+      "name": "Compras",
+      "desc": "Shared grocery lists for couples with real-time sync, 19 categories, search, filters and swipe to delete."
+    }
+  },
+  "footer": {
+    "ctaKicker": "Contact",
+    "ctaTitle": "Shall we talk about your project?",
+    "ctaLead": "Tell me what you need and I'll put together a no-strings assessment.",
+    "ctaEmail": "Email me",
+    "ctaMeta": "Santander · Spain",
+    "about": "Custom web development for shops and local businesses: fast, accessible and built to win customers.",
+    "explore": "Explore",
+    "demos": "Demos",
+    "contact": "Contact",
+    "language": "Language",
+    "styleHint": "Change the visual style from the floating “Style” button.",
+    "rights": "All rights reserved",
+    "built": "Built with Next.js · SCSS · next-intl",
+    "toTop": "Back to top"
   }
 }

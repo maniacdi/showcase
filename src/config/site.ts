@@ -5,6 +5,8 @@ export const SITE = {
   /** Your real portfolio / contact destination for the "hire me" CTA. */
   portfolioUrl: "https://javimagaldi.com",
   contactEmail: "magaldi6@gmail.com",
+  /** Public GitHub profile (footer). */
+  githubUrl: "https://github.com/maniacdi",
   /** WhatsApp click-to-chat number, international format, digits only. CHANGE ME. */
   whatsapp: "34608832966",
 };

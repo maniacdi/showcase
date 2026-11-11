@@ -1,5 +1,6 @@
 @use "tokens";
 @use "dark";
+@use "design-styles";
 
 * {
   box-sizing: border-box;
@@ -26,9 +27,10 @@ section[id] {
 }
 
 body {
-  background: var(--paper);
+  background: var(--page-bg);
+  background-attachment: var(--page-bg-attach);
   color: var(--ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-style);
   font-size: var(--text-m);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -38,6 +40,8 @@ h1,
 h2,
 h3,
 h4 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
   line-height: 1.08;
   text-wrap: balance;
   margin: 0;
@@ -45,7 +49,26 @@ h4 {
 
 h1,
 h2 {
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: var(--display-tracking);
+  text-transform: var(--display-transform);
+  text-shadow: var(--display-glow);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Smooth cross-fade when switching design style (skipped for reduced motion). */
+html.style-switching *,
+html.style-switching *::before,
+html.style-switching *::after {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    border-radius 0.35s ease,
+    box-shadow 0.35s ease !important;
 }
 
 p {

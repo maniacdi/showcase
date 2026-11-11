@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { alternatesFor } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -25,10 +26,14 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const producto = productosSeed.find((p) => p.slug === slug);
   if (!producto) return {};
-  return { title: `${producto.name} · Tienda`, description: producto.description };
+  return {
+    title: `${producto.name} · Tienda`,
+    description: producto.description,
+    alternates: alternatesFor(`/tienda/${slug}`, locale),
+  };
 }
 
 export default async function ProductoPage({

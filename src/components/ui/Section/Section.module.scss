@@ -1,6 +1,6 @@
 .section {
   padding-block: var(--s-7);
-  border-top: 1px solid var(--hairline);
+  border-top: var(--section-border);
 }
 @media (min-width: 768px) {
   .section {
@@ -8,5 +8,5 @@
   }
 }
 .alt {
-  background: var(--paper-2);
+  background: var(--surface-alt);
 }
