@@ -3,8 +3,8 @@
 /* The dock itself wears the active style — it's part of the demo. */
 .dock {
   position: fixed;
-  left: var(--s-4);
-  bottom: var(--s-4);
+  left: calc(var(--s-4) + env(safe-area-inset-left, 0px));
+  bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px));
   z-index: 950;
   display: flex;
   flex-direction: column;
@@ -22,6 +22,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--s-3);
+  min-height: 48px;
   padding: var(--s-2) var(--s-4) var(--s-2) var(--s-3);
   font-family: var(--font-style);
   font-size: var(--text-s);
@@ -39,6 +40,13 @@
   flex-direction: column;
   align-items: flex-start;
   line-height: 1.15;
+}
+/* Phones: just swatch + style name, smaller footprint. */
+.triggerKicker {
+  display: none;
+  @include sm {
+    display: inline;
+  }
 }
 .triggerKicker {
   font-family: var(--font-mono);
@@ -58,7 +66,8 @@
   background: var(--dialog-bg);
   box-shadow: var(--shadow-overlay);
   width: min(320px, calc(100vw - 2 * var(--s-4)));
-  max-height: calc(100dvh - 120px);
+  max-height: calc(100dvh - 120px - env(safe-area-inset-bottom, 0px));
+  overscroll-behavior: contain;
   overflow-y: auto;
   padding: var(--s-3);
   animation: pop 0.18s cubic-bezier(0.22, 1, 0.36, 1);

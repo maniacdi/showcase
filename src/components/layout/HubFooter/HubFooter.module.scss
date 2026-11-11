@@ -46,6 +46,10 @@
     gap: var(--s-8);
   }
 }
+.ctaText,
+.ctaActions {
+  min-width: 0;
+}
 .ctaText {
   display: flex;
   flex-direction: column;
@@ -208,7 +212,7 @@
   font-size: var(--text-xs);
   color: var(--ink-soft);
   /* leave room for the floating style dock / WhatsApp on mobile */
-  padding-bottom: calc(var(--s-8) + var(--s-6));
+  padding-bottom: var(--float-gap);
   @include md {
     flex-direction: row;
     justify-content: space-between;

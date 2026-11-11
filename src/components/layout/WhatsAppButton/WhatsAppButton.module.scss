@@ -1,20 +1,40 @@
+@use "styles/mixins" as *;
+
 .fab {
   position: fixed;
-  right: var(--s-5);
-  bottom: var(--s-5);
+  right: calc(var(--s-4) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px));
   z-index: 900;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: #25d366;
   color: #fff;
-  box-shadow: var(--shadow-overlay);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
   transition: transform 0.15s ease;
+  @include md {
+    right: var(--s-5);
+    bottom: var(--s-5);
+    width: 52px;
+    height: 52px;
+  }
+}
+.fab svg {
+  width: 24px;
+  height: 24px;
+}
+/* Only real pointers get the hover lift (touch would leave it stuck). */
+@media (hover: hover) {
+  .fab:hover {
+    transform: scale(1.06);
+  }
 }
 .fab:hover {
-  transform: scale(1.06);
   text-decoration: none;
+}
+.fab:active {
+  transform: scale(0.96);
 }

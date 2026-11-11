@@ -309,6 +309,12 @@
 
   --font-style: var(--font-space), system-ui, sans-serif;
   --font-display: var(--font-unbounded), system-ui, sans-serif;
+  /* Unbounded is ~30% wider than the other faces: scale display sizes down so
+     long uppercase words fit narrow phones. */
+  --text-xl: clamp(1.35rem, 5.2vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 6.5vw, 2.5rem);
+  --text-3xl: clamp(1.9rem, 7.2vw, 3.5rem);
+  --text-4xl: clamp(2.4rem, 10vw, 6.5rem);
   --display-weight: 600;
   --display-transform: uppercase;
   --display-tracking: 0.01em;

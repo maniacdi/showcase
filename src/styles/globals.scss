@@ -10,6 +10,15 @@ html,
 body {
   margin: 0;
   padding: 0;
+  /* Safety net against stray horizontal scroll on phones. `clip` (not hidden)
+     keeps position: sticky working on the header. */
+  overflow-x: clip;
+}
+
+/* Room for the floating style dock + WhatsApp button so they never cover the
+   last line of content on phones. */
+:root {
+  --float-gap: calc(76px + env(safe-area-inset-bottom, 0px));
 }
 
 html {
@@ -44,6 +53,8 @@ h4 {
   font-weight: var(--display-weight);
   line-height: 1.08;
   text-wrap: balance;
+  overflow-wrap: break-word; /* only breaks a word that can't fit on its own line */
+  hyphens: auto;
   margin: 0;
 }
 
