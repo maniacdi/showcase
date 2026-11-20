@@ -11,7 +11,7 @@ export default function DemoBar() {
       <Container className={styles.inner}>
         <span className={styles.text}>{t("demoBar")}</span>
         <Link href="/" className={styles.link}>
-          {t("seeAll")} →
+          {t("seeAll")}
         </Link>
       </Container>
     </div>

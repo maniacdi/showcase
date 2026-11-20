@@ -1,0 +1,184 @@
+@use "styles/mixins" as *;
+
+.compare {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  padding-bottom: var(--s-8);
+}
+
+/* ---------- Pickers (page's own style) ---------- */
+.controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-3);
+  align-items: end;
+  @include sm {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+}
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+}
+.controlLabel {
+  font-size: var(--text-s);
+  font-weight: var(--weight-semibold);
+  color: var(--ink-soft);
+}
+.select {
+  @include control;
+  min-height: 44px;
+  width: 100%;
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-style);
+  font-size: var(--text-m);
+}
+.swap {
+  justify-self: start;
+}
+
+/* ---------- Panes: each one is a local [data-style] scope ---------- */
+.panes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-4);
+  @include lg {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* Everything below reads the PANE's tokens (they inherit from data-style). */
+.pane {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: var(--font-style);
+  border: var(--section-border);
+  border-radius: var(--card-radius);
+  /* borderless styles still need an edge against the page */
+  box-shadow: 0 0 0 1px var(--hairline);
+  overflow: hidden;
+  isolation: isolate;
+  @include md {
+    padding: var(--s-5);
+  }
+}
+.pane[data-style="neofuturism"] {
+  color-scheme: dark;
+}
+.paneHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: var(--header-border);
+}
+.paneName {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--text-l);
+}
+.paneActive {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--text-s);
+  font-weight: var(--weight-semibold);
+  color: var(--ink-soft);
+}
+
+/* ---------- Demo block ---------- */
+.demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.eyebrow {
+  font-size: var(--text-s);
+  font-weight: var(--weight-semibold);
+  color: var(--ink-soft);
+}
+.headline {
+  font-size: var(--text-2xl);
+  text-transform: var(--display-transform);
+  letter-spacing: var(--display-tracking);
+  text-shadow: var(--display-glow);
+}
+.lead {
+  color: var(--ink-soft);
+  max-width: 44ch;
+}
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-4);
+  @include md {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.card,
+.form {
+  @include surface;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-4);
+}
+.card:hover {
+  @include surface-hover;
+}
+.cardTitle {
+  font-size: var(--text-l);
+}
+.cardText {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.cardFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: auto;
+}
+.price {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--text-xl);
+  color: var(--ink);
+}
+.sent {
+  min-height: 1.5em;
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .form {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}

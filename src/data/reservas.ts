@@ -28,3 +28,6 @@ export function availableSlots(citas: Cita[], date: string): string[] {
   );
   return TIME_SLOTS.filter((slot) => !taken.has(slot));
 }
+// Legacy single-agenda helpers above (kept for compatibility and their tests).
+// The /reservas flow now uses the multi-professional agenda: src/data/clinica.ts
+// + src/lib/agenda.ts.

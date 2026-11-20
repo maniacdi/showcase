@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import Brand from "@/components/layout/Brand/Brand";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher/LocaleSwitcher";
+import InstallAppButton from "@/components/pwa/InstallAppButton";
 import Container from "@/components/ui/Container/Container";
 import { SITE } from "@/config/site";
 import styles from "./SiteFooter.module.scss";
@@ -21,7 +22,7 @@ export default function SiteFooter() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {t("hireCta")} →
+            {t("hireCta")}
           </a>
         </div>
 
@@ -29,6 +30,7 @@ export default function SiteFooter() {
           <div className={styles.left}>
             <Brand />
             <span className={styles.notice}>{t("demoNotice")}</span>
+            <InstallAppButton />
           </div>
           <LocaleSwitcher />
         </div>

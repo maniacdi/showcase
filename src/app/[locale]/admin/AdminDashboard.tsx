@@ -9,6 +9,10 @@ import { formatPrice } from "@/lib/cart";
 import { useAuth } from "@/lib/auth/useAuth";
 import { useCitasStore } from "@/store/useCitasStore";
 import { useProductsStore } from "@/store/useProductsStore";
+import AdminOrders from "@/components/admin/AdminOrders";
+import AdminOverview from "@/components/admin/AdminOverview";
+import AdminAgenda from "@/components/clinica/AdminAgenda";
+import AdminRestaurante from "@/components/restaurante/AdminRestaurante";
 import AdminControls from "./AdminControls";
 import styles from "./admin.module.scss";
 
@@ -30,6 +34,8 @@ export default function AdminDashboard() {
     pendiente: t("statusPendiente"),
     confirmada: t("statusConfirmada"),
     cancelada: t("statusCancelada"),
+    asistio: t("statusAsistio"),
+    no_presentado: t("statusNoPresentado"),
   };
 
   return (
@@ -47,6 +53,8 @@ export default function AdminDashboard() {
             {t("logout")}
           </Button>
         </header>
+
+        <AdminOverview />
 
         <section className={styles.metrics} aria-label={t("citasTitle")}>
           <div className={styles.metric}>
@@ -112,6 +120,8 @@ export default function AdminDashboard() {
           </table>
         </div>
 
+        <AdminAgenda />
+
         <h2 className={styles.h2}>{t("productsTitle")}</h2>
         <div className={styles.tableWrap}>
           <table className={styles.table}>
@@ -136,10 +146,11 @@ export default function AdminDashboard() {
                       type="button"
                       role="switch"
                       aria-checked={p.active}
+                      aria-label={`${t("colActive")}: ${p.name}`}
                       className={styles.switch}
                       onClick={() => toggleActive(p.id)}
                     >
-                      {p.active ? "ON" : "OFF"}
+                      {p.active ? t("on") : t("off")}
                     </button>
                   </td>
                 </tr>
@@ -147,6 +158,10 @@ export default function AdminDashboard() {
             </tbody>
           </table>
         </div>
+
+        <AdminOrders />
+
+        <AdminRestaurante />
 
         <h2 className={styles.h2}>{t("settingsTitle")}</h2>
         <AdminControls />

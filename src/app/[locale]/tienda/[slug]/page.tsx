@@ -9,16 +9,16 @@ import SiteHeader from "@/components/layout/SiteHeader/SiteHeader";
 import Container from "@/components/ui/Container/Container";
 import Section from "@/components/ui/Section/Section";
 import AddToCart from "@/components/tienda/AddToCart";
-import { CATEGORY_COLORS, productosSeed } from "@/data/productos";
+import Photo from "@/components/tienda/Photo";
+import PhotoCredits from "@/components/tienda/PhotoCredits";
+import { productosSeed } from "@/data/productos";
 import { formatPrice } from "@/lib/cart";
 import ThemeProvider from "@/themes/ThemeProvider";
 import { routing } from "@/i18n/routing";
 import styles from "./detail.module.scss";
 
 export function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    productosSeed.map((p) => ({ locale, slug: p.slug })),
-  );
+  return routing.locales.flatMap((locale) => productosSeed.map((p) => ({ locale, slug: p.slug })));
 }
 
 export async function generateMetadata({
@@ -30,7 +30,7 @@ export async function generateMetadata({
   const producto = productosSeed.find((p) => p.slug === slug);
   if (!producto) return {};
   return {
-    title: `${producto.name} · Tienda`,
+    title: `${producto.name}, tienda`,
     description: producto.description,
     alternates: alternatesFor(`/tienda/${slug}`, locale),
   };
@@ -53,12 +53,16 @@ export default async function ProductoPage({
     name: producto.name,
     description: producto.description,
     category: producto.category,
+    image: producto.image.src,
     offers: { "@type": "Offer", price: producto.price, priceCurrency: "EUR" },
   };
 
   return (
     <ThemeProvider theme="tienda">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <SiteHeader
         nav={[{ href: "/tienda", label: t("title") }]}
         cta={{ href: "/tienda/carrito", label: t("cart") }}
@@ -67,15 +71,15 @@ export default async function ProductoPage({
       <Section>
         <Container className={styles.wrap}>
           <Link href="/tienda" className={styles.back}>
-            ← {t("backToShop")}
+            {t("backToShop")}
           </Link>
           <div className={styles.grid}>
-            <div
+            <Photo
+              photo={producto.image}
+              sizes="(min-width: 1024px) 460px, (min-width: 768px) 50vw, 100vw"
               className={styles.image}
-              style={{ background: CATEGORY_COLORS[producto.category] ?? "var(--ink)" }}
-            >
-              <span>{producto.name.charAt(0)}</span>
-            </div>
+              priority
+            />
             <div className={styles.info}>
               <span className={styles.cat}>{producto.category}</span>
               <h1 className={styles.name}>{producto.name}</h1>
@@ -84,6 +88,7 @@ export default async function ProductoPage({
               <AddToCart producto={producto} />
             </div>
           </div>
+          <PhotoCredits label={t("photos")} photos={[producto.image]} className={styles.credits} />
         </Container>
       </Section>
       <SiteFooter />

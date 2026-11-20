@@ -1,0 +1,171 @@
+@use "styles/mixins" as *;
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-width: 720px;
+}
+
+/* Collapsed chip */
+.chip {
+  @include control;
+  border-color: var(--color-field-border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-4);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-style);
+  font-size: var(--text-s);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.chip:hover {
+  border-color: var(--ink);
+}
+.chip:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
+}
+.chipLabel {
+  font-weight: var(--weight-semibold);
+  color: var(--ink);
+}
+.chipValue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 12ch; /* reserves room so "Midiendo" -> "LCP 1,23 s" never reflows */
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+.chipAction {
+  margin-left: auto;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Rating marker: shape + text, never colour alone */
+.dot {
+  flex: none;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-soft);
+  background: transparent;
+}
+.dot[data-rating="good"] {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.dot[data-rating="needs-improvement"] {
+  border-color: var(--ink-soft);
+  background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 50%);
+}
+.dot[data-rating="poor"] {
+  border-radius: 0;
+  border-color: var(--color-danger);
+  background: var(--color-danger);
+}
+
+/* Expanded panel */
+.panel {
+  @include surface;
+  padding: var(--s-4) var(--s-5);
+}
+.panel[hidden] {
+  display: none;
+}
+.measured {
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  margin-bottom: var(--s-2);
+}
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  grid-template-areas:
+    "name value"
+    "status threshold";
+  gap: var(--s-1) var(--s-3);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--hairline);
+  @include md {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
+    grid-template-areas: "name value status threshold";
+    align-items: center;
+  }
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.name {
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.abbr {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+  color: var(--ink);
+}
+.desc {
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}
+.value {
+  grid-area: value;
+  font-family: var(--font-mono);
+  font-size: var(--text-l);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  text-align: right;
+  @include md {
+    text-align: left;
+  }
+}
+.status {
+  grid-area: status;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.status[data-rating] {
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+.threshold {
+  grid-area: threshold;
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  text-align: right;
+  @include md {
+    text-align: left;
+  }
+}
+.note {
+  margin-top: var(--s-3);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}

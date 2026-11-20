@@ -12,6 +12,22 @@
 .word {
   font-family: var(--font-mono);
   font-size: var(--text-l);
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   letter-spacing: -0.01em;
+}
+/* Visitor's uploaded logo (/marca): contained, never cropped. */
+.logo {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+/* Visitor's business name: their display face, ellipsis on long names. */
+.wordCustom {
+  font-family: var(--font-display);
+  letter-spacing: normal;
+  max-width: 18ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

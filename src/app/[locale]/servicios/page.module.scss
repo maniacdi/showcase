@@ -26,21 +26,13 @@
   gap: var(--s-7);
   align-items: center;
   @include lg {
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
     gap: var(--s-8);
   }
-}
-.heroKicker {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent);
 }
 .heroTitle {
   font-size: var(--text-3xl);
   max-width: 14ch;
-  margin-top: var(--s-3);
 }
 .heroText {
   font-size: var(--text-l);
@@ -85,10 +77,7 @@
   flex-direction: column;
 }
 .heroStats dt {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--text-s);
   color: var(--ink-soft);
 }
 .heroStats dd {
@@ -101,16 +90,16 @@
   display: grid;
   gap: var(--tile-gap, 0);
   @include md {
-    grid-template-columns: repeat(var(--services-cols, 3), 1fr);
+    grid-template-columns: repeat(var(--services-cols, 3), minmax(0, 1fr));
   }
 }
 .service {
   padding: var(--s-5) 0;
   border-top: 1px solid var(--hairline);
   transition:
-    padding-left 0.2s ease,
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease;
   @include md {
     @include tile($top: 2px solid var(--ink), $pad: var(--s-5));
   }
@@ -126,7 +115,6 @@
     transform: var(--card-hover-transform);
     box-shadow: var(--card-shadow-hover);
   }
-  padding-left: var(--s-3);
 }
 .serviceNum {
   font-family: var(--font-mono);
@@ -144,19 +132,20 @@
 
 .plans {
   display: grid;
-  gap: var(--s-5);
-  @include md {
-    grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-6) var(--s-5);
+  /* 3 across only once each card is wide enough for a one-line CTA */
+  @include lg {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 .ventajas {
   display: grid;
   gap: var(--s-6);
   @include sm {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @include lg {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 .ventaja {
@@ -213,9 +202,8 @@
   margin-top: var(--s-2);
 }
 .planFrom {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-family: var(--font-style);
+  font-size: var(--text-s);
   color: var(--ink-soft);
 }
 .pricingLead {
@@ -244,38 +232,64 @@
 .planCta {
   margin-top: auto;
   width: 100%;
+  white-space: nowrap;
 }
 
-.about {
-  max-width: 60ch;
-  font-size: var(--text-l);
+/* "Datos de ejemplo" / "Texto de ejemplo": marks placeholder content */
+.sampleNote {
+  width: fit-content;
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  border: 1px dashed var(--ink-soft);
+  border-radius: var(--ctl-radius);
+  padding: 2px var(--s-2);
+}
+.heroAside .sampleNote {
+  margin-top: var(--s-4);
 }
 
-/* Testimonials */
-.testimonials {
+/* About: photo beside the copy */
+.aboutGrid {
   display: grid;
-  gap: var(--s-5);
-  @include md {
-    grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-6);
+  align-items: center;
+  @include lg {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-8);
   }
 }
-.testimonial {
-  margin: 0;
+.aboutPhoto {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--card-radius);
+  background: var(--surface-alt);
+}
+.aboutBody {
   display: flex;
   flex-direction: column;
-  gap: var(--s-4);
-  @include tile($top: 2px solid var(--accent), $pad: var(--s-4) 0 0);
+  gap: var(--s-3);
 }
-.quote {
-  margin: 0;
+.aboutBody .sampleNote {
+  margin-top: calc(-1 * var(--s-3));
+}
+.about {
+  max-width: 52ch;
+  font-size: var(--text-m);
+}
+.about:first-of-type {
   font-size: var(--text-l);
-  line-height: 1.4;
 }
-.author {
-  display: flex;
-  flex-direction: column;
-  font-size: var(--text-s);
+.aboutCredit {
+  margin-top: var(--s-3);
+}
+
+/* Live performance */
+.vitalsLead {
+  font-size: var(--text-m);
   color: var(--ink-soft);
+  max-width: 60ch;
+  margin: calc(-1 * var(--s-4)) 0 var(--s-5);
 }
 
 /* Contact: form + location */
@@ -283,7 +297,7 @@
   display: grid;
   gap: var(--s-7);
   @include lg {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--s-8);
   }
 }
@@ -293,39 +307,31 @@
   gap: var(--s-2);
 }
 .map {
-  position: relative;
+  display: block;
+  width: 100%;
   aspect-ratio: 16 / 10;
   border: var(--card-border);
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
-  overflow: hidden;
-  margin-bottom: var(--s-3);
-  /* self-contained placeholder map: hairline street grid (swap for a real embed) */
-  background-color: var(--surface-alt);
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background: var(--surface-alt);
 }
-.mapPin {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  background: var(--accent);
-  border: 2px solid var(--paper);
-  border-radius: 50% 50% 50% 0;
-  transform: translate(-50%, -100%) rotate(-45deg);
-  box-shadow: var(--shadow-overlay);
+.mapLink {
+  font-size: var(--text-s);
+  width: fit-content;
+  margin-bottom: var(--s-3);
 }
 .locationTitle {
   font-size: var(--text-l);
 }
 .address {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  font-style: normal;
   color: var(--ink);
 }
 .addressMeta {
+  width: fit-content;
   font-family: var(--font-mono);
   font-size: var(--text-s);
   color: var(--ink-soft);

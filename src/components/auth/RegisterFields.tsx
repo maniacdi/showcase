@@ -37,13 +37,17 @@ export default function RegisterFields({ onSwitch }: { onSwitch: () => void }) {
   return (
     <div className={styles.fields}>
       <div className={styles.headBlock}>
-        <span className={styles.eyebrow}>{t("registerEyebrow")}</span>
         <h1 className={styles.title}>{t("registerTitle")}</h1>
         <p className={styles.subtitle}>{t("registerSub")}</p>
       </div>
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         <Field label={t("name")} htmlFor="reg-name">
-          <Input id="reg-name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input
+            id="reg-name"
+            autoComplete="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </Field>
         <Field label={t("email")} htmlFor="reg-email">
           <Input

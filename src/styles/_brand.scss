@@ -1,0 +1,99 @@
+/* =====================================================================
+   BRAND OVERRIDE ("Tu negocio aquí", /marca).
+
+   PrefsScript (pre-paint) and BrandApplier put computed literals on <html>:
+     --brand-accent, --brand-ink (black/white, >=4.5:1 on the accent),
+     --brand-text / --brand-text-dark (accent shades >=4.5:1 on light/dark paper),
+     --brand-display / --brand-body (only with a font pairing)
+   plus data-brand="accent|ink" (focus ring source) and data-brand-font.
+
+   It must win over ANY design style, on <html> and on every local
+   [data-style] / [data-theme] scope (style blocks re-declare tokens there):
+   - `:not(#brand-off)` adds id-level specificity, so these selectors beat
+     every attribute-only style selector, dark variants included;
+   - !important on the accent beats the styles' own `--accent: … !important`
+     and ThemeProvider's inline per-vertical accent.
+   Derived tokens declared in the style blocks (var(--accent) …) recompute
+   on the same elements, so buttons, links and rings follow the brand.
+   ===================================================================== */
+
+$b: "html[data-brand]:not(#brand-off)";
+
+#{$b},
+#{$b} [data-style],
+#{$b} [data-theme] {
+  --accent: var(--brand-accent) !important;
+  --accent-ink: var(--brand-ink) !important;
+  /* derived variants: hover pulls toward the ink, soft is a translucent wash */
+  --accent-hover: color-mix(in oklab, var(--accent) 84%, var(--accent-ink));
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  --color-focus-on-accent: var(--accent-ink);
+}
+
+/* Focus ring: the accent only when it is >=3:1 on light AND dark paper. */
+html[data-brand="accent"]:not(#brand-off),
+html[data-brand="accent"]:not(#brand-off) [data-style],
+html[data-brand="accent"]:not(#brand-off) [data-theme] {
+  --color-focus: var(--accent);
+}
+html[data-brand="ink"]:not(#brand-off),
+html[data-brand="ink"]:not(#brand-off) [data-style],
+html[data-brand="ink"]:not(#brand-off) [data-theme] {
+  --color-focus: var(--ink);
+}
+
+/* Font pairing: display + body faces on top of the style's own type scale. */
+html[data-brand][data-brand-font]:not(#brand-off),
+html[data-brand][data-brand-font]:not(#brand-off) [data-style],
+html[data-brand][data-brand-font]:not(#brand-off) [data-theme] {
+  --font-style: var(--brand-body);
+  --font-display: var(--brand-display);
+}
+
+/* Style-specific spots that hard-code their own accent shade. */
+@mixin in-style($name) {
+  html[data-brand][data-style="#{$name}"]:not(#brand-off),
+  html[data-brand][data-style="#{$name}"]:not(#brand-off) [data-theme],
+  #{$b} [data-style="#{$name}"],
+  #{$b} [data-style="#{$name}"] [data-theme] {
+    @content;
+  }
+}
+@mixin in-style-dark($name) {
+  html[data-brand][data-color-scheme="dark"][data-style="#{$name}"]:not(#brand-off),
+  html[data-brand][data-color-scheme="dark"][data-style="#{$name}"]:not(#brand-off) [data-theme],
+  html[data-brand][data-color-scheme="dark"]:not(#brand-off) [data-style="#{$name}"],
+  html[data-brand][data-color-scheme="dark"]:not(#brand-off) [data-style="#{$name}"] [data-theme] {
+    @content;
+  }
+}
+
+/* Neumorphism: solid buttons are accent text on paper. */
+@include in-style("neumorphism") {
+  --btn-solid-ink: var(--brand-text);
+}
+@include in-style-dark("neumorphism") {
+  --btn-solid-ink: var(--brand-text-dark);
+}
+
+/* Brutalism: the auth panel sits on the accent with fixed black ink. */
+@include in-style("brutalism") {
+  --auth-panel-ink: var(--accent-ink);
+  --auth-panel-mark: var(--accent-ink);
+}
+@include in-style-dark("brutalism") {
+  --btn-outline-hover-bg: var(--accent);
+  --btn-outline-hover-ink: var(--accent-ink);
+}
+
+/* Glassmorphism: button glow is tinted with the style's violet. */
+@include in-style("glassmorphism") {
+  --btn-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 32%, transparent);
+  --btn-shadow-hover: 0 10px 28px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* Neofuturism: neon glow follows the brand instead of the stock cyan. */
+@include in-style("neofuturism") {
+  --btn-filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 45%, transparent));
+  --display-glow: 0 0 24px color-mix(in srgb, var(--accent) 35%, transparent);
+}

@@ -4,7 +4,10 @@
   align-items: center;
   justify-content: center;
   gap: var(--s-2);
-  padding: var(--s-3) var(--s-5);
+  min-height: 44px;
+  padding: var(--s-2) var(--s-5);
+  text-align: center;
+  text-wrap: balance; /* long labels break evenly instead of orphaning a word */
   font-family: var(--font-style);
   font-size: var(--text-s);
   font-weight: var(--btn-weight);
@@ -30,9 +33,23 @@
   box-shadow: var(--btn-shadow-hover);
   text-decoration: none;
 }
-.btn:disabled {
-  opacity: 0.55;
+.btn:active:not(:disabled) {
+  transform: var(--btn-active-transform);
+  box-shadow: var(--btn-shadow-active);
+  opacity: 0.9;
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
   cursor: not-allowed;
+}
+/* Neofuturism clips buttons with clip-path, so the ring is drawn inside
+   (--btn-focus-offset < 0) and solid buttons switch to the on-accent colour. */
+.btn:focus-visible {
+  outline-offset: var(--btn-focus-offset);
+}
+.solid:focus-visible {
+  outline-color: var(--btn-focus-solid);
 }
 .solid {
   background: var(--btn-solid-bg);

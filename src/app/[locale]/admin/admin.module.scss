@@ -23,7 +23,7 @@
   display: grid;
   gap: var(--s-4);
   @include sm {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 .metric {
@@ -60,9 +60,8 @@
   border-bottom: 1px solid var(--hairline);
 }
 .table th {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: var(--text-s);
+  font-weight: 600;
   color: var(--ink-soft);
 }
 .table tr:last-child td {
@@ -79,17 +78,28 @@
   border-radius: var(--radius);
   border: 1px solid transparent;
 }
+/* Status chips from theme tokens only, so they hold in every style and in dark mode. */
 .pendiente {
-  color: #8a5a00;
-  border-color: #e7c87a;
+  color: var(--ink);
+  border-color: var(--ink-soft);
+  border-style: dashed;
 }
 .confirmada {
-  color: #0e7c5a;
-  border-color: #9fd6c2;
+  color: var(--accent);
+  border-color: var(--accent);
 }
 .cancelada {
-  color: #9a1c1c;
-  border-color: #e3a3a3;
+  color: var(--ink-soft);
+  border-color: var(--hairline);
+  text-decoration: line-through;
+}
+.asistio {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.no_presentado {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 }
 
 .actions {
@@ -102,11 +112,20 @@
   color: var(--accent);
   cursor: pointer;
   font-size: var(--text-s);
-  padding: 0;
+  min-height: 44px;
+  padding: 0 var(--s-1);
+  transition: color 0.15s ease, transform 0.1s ease;
+}
+.action:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.action:active:not(:disabled) {
+  transform: translateY(1px);
 }
 .action:disabled {
   color: var(--ink-soft);
-  cursor: default;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .settings {
@@ -128,15 +147,43 @@
   gap: var(--s-4);
 }
 .switch {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-s);
   @include control;
+  border-color: var(--color-field-border);
+  min-width: 4.5em;
+  min-height: 44px;
   padding: var(--s-1) var(--s-3);
   cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+.switch[aria-checked="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 .select {
   font-family: var(--font-style);
   font-size: var(--text-s);
+  min-height: 44px;
   padding: var(--s-2) var(--s-3);
   @include control;
+  border-color: var(--color-field-border);
+  cursor: pointer;
+}
+.switch:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.switch:disabled,
+.select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.action:focus-visible,
+.switch:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }

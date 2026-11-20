@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import Container from "@/components/ui/Container/Container";
 import StyleGallery from "@/components/style/StyleGallery";
+import BrandPromo from "@/components/brand/BrandPromo";
 import HubFooter from "@/components/layout/HubFooter/HubFooter";
 import { SITE } from "@/config/site";
 import { proyectos } from "@/data/proyectos";
@@ -15,8 +16,12 @@ const ITEMS = [
   { key: "servicios", href: "/servicios", glyph: "◧" },
   { key: "tienda", href: "/tienda", glyph: "◩" },
   { key: "reservas", href: "/reservas", glyph: "◫" },
+  { key: "restaurante", href: "/restaurante", glyph: "◪" },
   { key: "admin", href: "/admin", glyph: "◨" },
 ] as const;
+
+/** Stack tags shown per project card; the full list stays in src/data. */
+const MAX_STACK = 4;
 
 export async function generateMetadata({
   params,
@@ -70,54 +75,65 @@ function HubContent() {
       <Container>
         {/* ---------- Hero ---------- */}
         <header className={styles.head}>
-          <span className={styles.kicker}>{t("kicker")}</span>
           <h1 className={styles.title}>{t("title")}</h1>
-          <p className={styles.subtitle}>{t("subtitle")}</p>
-          <p className={styles.seoLead}>{t("seoLead")}</p>
+          <p className={styles.subtitle}>
+            {t("subtitle", {
+              styles: DESIGN_STYLES.length,
+              demos: ITEMS.length,
+              projects: proyectos.length,
+            })}
+          </p>
           <div className={styles.heroCtas}>
             <a href="#estilos" className={styles.ctaPrimary}>
-              {t("ctaStyles")} ↓
+              {t("ctaStyles")}
             </a>
             <a href="#demos" className={styles.ctaSecondary}>
               {t("ctaDemos")}
             </a>
           </div>
-          <dl className={styles.stats}>
-            <div>
-              <dt>{t("statStyles")}</dt>
-              <dd>{DESIGN_STYLES.length}</dd>
-            </div>
-            <div>
-              <dt>{t("statDemos")}</dt>
-              <dd>{ITEMS.length}</dd>
-            </div>
-            <div>
-              <dt>{t("statProjects")}</dt>
-              <dd>{proyectos.length}</dd>
-            </div>
-          </dl>
+          <p className={styles.byline}>
+            {t.rich("byline", {
+              link: (chunks) => (
+                <a href={SITE.portfolioUrl} target="_blank" rel="noopener noreferrer">
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
         </header>
 
         {/* ---------- Style gallery ---------- */}
-        <section id="estilos" className={styles.block} aria-labelledby="estilos-title">
+        <section
+          id="estilos"
+          className={`${styles.block} ${styles.blockFirst}`}
+          aria-labelledby="estilos-title"
+        >
           <div className={styles.blockHead}>
-            <span className={styles.kicker}>{t("stylesKicker")}</span>
             <h2 id="estilos-title" className={styles.blockTitle}>
               {t("stylesTitle")}
             </h2>
             <p className={styles.blockLead}>{t("stylesLead")}</p>
-            <p className={styles.hint}>{t("stylesHint")}</p>
           </div>
           <StyleGallery />
         </section>
 
+        {/* ---------- Tu negocio aquí (brand configurator) ---------- */}
+        <BrandPromo
+          classes={{
+            block: styles.block,
+            head: styles.blockHead,
+            title: styles.blockTitle,
+            lead: styles.blockLead,
+          }}
+        />
+
         {/* ---------- Demos (bento) ---------- */}
         <section id="demos" className={styles.block} aria-labelledby="demos-title">
           <div className={styles.blockHead}>
-            <span className={styles.kicker}>{t("demosKicker")}</span>
             <h2 id="demos-title" className={styles.blockTitle}>
               {t("demosTitle")}
             </h2>
+            <p className={styles.blockLead}>{t("seoLead")}</p>
           </div>
 
           <aside className={styles.disclaimer} role="note">
@@ -137,7 +153,7 @@ function HubContent() {
                   </span>
                   <span className={styles.demoName}>{t(item.key)}</span>
                   <span className={styles.demoDesc}>{t(`${item.key}Desc`)}</span>
-                  <span className={styles.demoGo}>{t("open")} →</span>
+                  <span className={styles.demoGo}>{t("open")}</span>
                 </Link>
               </li>
             ))}
@@ -147,7 +163,6 @@ function HubContent() {
         {/* ---------- Real projects ---------- */}
         <section id="proyectos" className={styles.block} aria-labelledby="proyectos-title">
           <div className={styles.blockHead}>
-            <span className={styles.kicker}>{t("projectsKicker")}</span>
             <h2 id="proyectos-title" className={styles.blockTitle}>
               {t("projectsTitle")}
             </h2>
@@ -169,7 +184,8 @@ function HubContent() {
                       rel="noopener noreferrer"
                       className={styles.projectLink}
                     >
-                      {tp("visit")} ↗
+                      {tp("visit")}
+                      <span aria-hidden="true">↗</span>
                     </a>
                   ) : (
                     <span className={styles.projectPrivate}>{tp("private")}</span>
@@ -178,7 +194,7 @@ function HubContent() {
                 <h3 className={styles.projectName}>{tp(`${p.key}.name`)}</h3>
                 <p className={styles.projectDesc}>{tp(`${p.key}.desc`)}</p>
                 <ul className={styles.stack} aria-label="Stack">
-                  {p.stack.map((s) => (
+                  {p.stack.slice(0, MAX_STACK).map((s) => (
                     <li key={s}>{s}</li>
                   ))}
                 </ul>

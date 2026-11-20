@@ -1,0 +1,29 @@
+.wrap {
+  max-width: 640px;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-4);
+  padding-block: var(--s-8);
+}
+.title {
+  font-size: var(--text-2xl);
+}
+.text {
+  color: var(--ink-soft);
+  font-size: var(--text-m);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+}
+.home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--text-s);
+  color: var(--ink);
+}

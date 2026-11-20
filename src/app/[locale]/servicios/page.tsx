@@ -11,7 +11,11 @@ import SectionHead from "@/components/ui/SectionHead/SectionHead";
 import ContactForm from "@/components/servicios/ContactForm";
 import BudgetButton from "@/components/servicios/BudgetButton";
 import BudgetModal from "@/components/servicios/BudgetModal";
-import { business, plans, services, testimonios, ventajas } from "@/data/servicios";
+import LiveVitals from "@/components/servicios/LiveVitals";
+import ReviewsSummary from "@/components/servicios/ReviewsSummary";
+import Photo from "@/components/tienda/Photo";
+import PhotoCredits from "@/components/tienda/PhotoCredits";
+import { aboutPhoto, business, plans, services, ventajas } from "@/data/servicios";
 import styles from "./page.module.scss";
 
 export async function generateMetadata({
@@ -29,14 +33,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function ServiciosPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function ServiciosPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "servicios" });
+  const tv = await getTranslations({ locale, namespace: "vitals" });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -44,8 +45,21 @@ export default async function ServiciosPage({
     name: business.name,
     telephone: business.phone,
     email: business.email,
-    address: { "@type": "PostalAddress", addressLocality: business.city },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: business.street,
+      addressLocality: business.city,
+    },
   };
+
+  // OpenStreetMap embed around the (demo) location; ~1 km wide.
+  const { lat, lon } = business;
+  const bbox = [lon - 0.006, lat - 0.0033, lon + 0.006, lat + 0.0033]
+    .map((n) => n.toFixed(4))
+    .join(",");
+  const mapEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${lat}%2C${lon}`;
+  const mapPage = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`;
+  const directionsUrl = `https://www.openstreetmap.org/directions?to=${lat}%2C${lon}`;
 
   return (
     <ThemeProvider theme="servicios">
@@ -67,7 +81,6 @@ export default async function ServiciosPage({
         <Section className={styles.hero}>
           <Container className={styles.heroGrid}>
             <div className={styles.heroMain}>
-              <span className={styles.heroKicker}>{business.name} · {business.city}</span>
               <h1 className={styles.heroTitle}>{t("heroTitle")}</h1>
               <p className={styles.heroText}>{t("heroText")}</p>
               <div className={styles.heroCta}>
@@ -75,22 +88,23 @@ export default async function ServiciosPage({
                 <span className={styles.perfBadge}>{t("perfBadge")}</span>
               </div>
             </div>
-            <div className={styles.heroAside} aria-hidden="true">
-              <div className={styles.heroAccent} />
+            <div className={styles.heroAside}>
+              <div className={styles.heroAccent} aria-hidden="true" />
               <dl className={styles.heroStats}>
                 <div>
-                  <dt>Proyectos</dt>
+                  <dt>{t("statProjects")}</dt>
                   <dd>+50</dd>
                 </div>
                 <div>
-                  <dt>Desde</dt>
+                  <dt>{t("statSince")}</dt>
                   <dd>2019</dd>
                 </div>
                 <div>
-                  <dt>Reseñas</dt>
+                  <dt>{t("statReviews")}</dt>
                   <dd>4,9/5</dd>
                 </div>
               </dl>
+              <p className={styles.sampleNote}>{t("sampleData")}</p>
             </div>
           </Container>
         </Section>
@@ -161,25 +175,40 @@ export default async function ServiciosPage({
 
         <Section id="sobre">
           <Container>
-            <SectionHead title={t("aboutTitle")} />
-            <p className={styles.about}>{t("aboutText")}</p>
+            <div className={styles.aboutGrid}>
+              <Photo
+                photo={aboutPhoto}
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className={styles.aboutPhoto}
+              />
+              <div className={styles.aboutBody}>
+                <SectionHead title={t("aboutTitle")} />
+                <p className={styles.sampleNote}>{t("aboutSample")}</p>
+                <p className={styles.about}>{t("aboutText")}</p>
+                <p className={styles.about}>{t("aboutText2")}</p>
+                <p className={styles.about}>{t("aboutText3")}</p>
+                <PhotoCredits
+                  label={t("photos")}
+                  photos={[aboutPhoto]}
+                  className={styles.aboutCredit}
+                />
+              </div>
+            </div>
           </Container>
         </Section>
 
         <Section id="opiniones" alt>
           <Container>
             <SectionHead title={t("testimonialsTitle")} />
-            <div className={styles.testimonials}>
-              {testimonios.map((tt) => (
-                <figure key={tt.author} className={styles.testimonial}>
-                  <blockquote className={styles.quote}>“{tt.quote}”</blockquote>
-                  <figcaption className={styles.author}>
-                    <strong>{tt.author}</strong>
-                    <span>{tt.role}</span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
+            <ReviewsSummary sampleLabel={t("sampleData")} />
+          </Container>
+        </Section>
+
+        <Section id="rendimiento">
+          <Container>
+            <SectionHead title={tv("title")} />
+            <p className={styles.vitalsLead}>{tv("lead")}</p>
+            <LiveVitals />
           </Container>
         </Section>
 
@@ -189,21 +218,42 @@ export default async function ServiciosPage({
             <div className={styles.contactGrid}>
               <ContactForm />
               <aside className={styles.location}>
-                <div className={styles.map} aria-hidden="true">
-                  <span className={styles.mapPin} />
-                </div>
-                <h3 className={styles.locationTitle}>{t("locationTitle")}</h3>
-                <p className={styles.address}>{business.address}</p>
-                <p className={styles.addressMeta}>
-                  {business.phone} · {business.email}
-                </p>
+                <iframe
+                  className={styles.map}
+                  src={mapEmbed}
+                  title={t("mapTitle")}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
                 <a
-                  className={styles.directions}
-                  href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(business.address)}`}
+                  className={styles.mapLink}
+                  href={mapPage}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {t("directions")} →
+                  {t("mapLink")}
+                </a>
+                <h3 className={styles.locationTitle}>{t("locationTitle")}</h3>
+                <address className={styles.address}>
+                  <span>{business.street}</span>
+                  <span>{business.postal}</span>
+                  <a
+                    href={`tel:${business.phone.replace(/\s/g, "")}`}
+                    className={styles.addressMeta}
+                  >
+                    {business.phone}
+                  </a>
+                  <a href={`mailto:${business.email}`} className={styles.addressMeta}>
+                    {business.email}
+                  </a>
+                </address>
+                <a
+                  className={styles.directions}
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("directions")}
                 </a>
               </aside>
             </div>

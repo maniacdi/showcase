@@ -80,16 +80,28 @@
   --feature-row: auto;
   --tile-gap: 0;
 
-  /* controls */
+  /* controls — --color-field-border is >=3:1 against --surface/--input-bg
+     (WCAG 1.4.11); other modules (reservas selects) reuse it. */
   --ctl-radius: var(--radius);
+  --color-field-border: #7c8088;
   --input-bg: var(--paper);
-  --input-border: 1px solid var(--hairline);
+  --input-border: 1px solid var(--color-field-border);
   --input-shadow: none;
+
+  /* focus ring — >=3:1 against the surface. Controls sitting on an accent
+     band (SiteFooter hire CTA) switch to the on-accent variant. */
+  --color-focus: var(--accent);
+  --color-focus-on-accent: var(--accent-ink);
+  --btn-focus-offset: 2px; /* clipped buttons pull the ring inside */
+  --btn-focus-solid: var(--color-focus); /* ring colour on solid buttons */
+
+  /* status */
+  --color-danger: #b00020;
 
   /* buttons */
   --btn-radius: var(--radius);
   --btn-border-w: 1px;
-  --btn-weight: 600;
+  --btn-weight: var(--weight-semibold);
   --btn-tracking: 0.01em;
   --btn-transform: none;
   --btn-shadow: none;
@@ -97,6 +109,8 @@
   --btn-hover-transform: none;
   --btn-clip: none;
   --btn-filter: brightness(1);
+  --btn-active-transform: translateY(1px);
+  --btn-shadow-active: var(--btn-shadow-hover);
   --btn-solid-bg: var(--accent);
   --btn-solid-ink: var(--accent-ink);
   --btn-solid-border: transparent;
@@ -108,7 +122,10 @@
   /* type */
   --font-style: var(--font-sans);
   --font-display: var(--font-style);
-  --display-weight: 700;
+  /* Weights: 400 / 600 / 700 per style (Brutalism: 400 / 700 / 900).
+     Reset here so a local [data-style] preview never inherits another's. */
+  --weight-semibold: 600;
+  --display-weight: var(--weight-bold);
   --display-transform: none;
   --display-tracking: var(--tracking-tight);
   --display-glow: none;
@@ -145,6 +162,8 @@
 }
 
 @include define-dark("swiss") {
+  --color-focus: var(--ink); /* theme accents (admin is near-black) can vanish on dark paper */
+  --color-danger: #ff6b81;
   --footer-bg: #0b0c0f;
   --paper: #14161a;
   --paper-2: #1b1e24;
@@ -191,18 +210,25 @@
   --tile-gap: var(--s-5);
 
   --ctl-radius: 0;
+  --color-field-border: var(--ink);
   --input-bg: var(--paper-3);
-  --input-border: 3px solid var(--ink);
+  --input-border: 3px solid var(--color-field-border);
   --input-shadow: 4px 4px 0 var(--ink);
+  --color-focus: var(--ink); /* #ff4f00 is only 2.9:1 on the cream paper */
+  --color-focus-on-accent: var(--accent-ink);
+  /* weights collapse to 400 / 700 / 900 (display) */
+  --weight-semibold: var(--weight-bold);
 
   --btn-radius: 0;
   --btn-border-w: 3px;
-  --btn-weight: 800;
+  --btn-weight: var(--weight-bold);
   --btn-tracking: 0.06em;
   --btn-transform: uppercase;
   --btn-shadow: 4px 4px 0 var(--ink);
   --btn-shadow-hover: 1px 1px 0 var(--ink);
   --btn-hover-transform: translate(3px, 3px);
+  --btn-active-transform: translate(4px, 4px);
+  --btn-shadow-active: 0 0 0 var(--ink);
   --btn-solid-border: var(--ink);
   --btn-outline-bg: var(--paper-3);
   --btn-outline-border: var(--ink);
@@ -244,6 +270,7 @@
   --ink: #f4efe1;
   --ink-soft: #cfc8b6;
   --hairline: #f4efe1;
+  --color-danger: #ff6b81;
   --page-bg: radial-gradient(rgba(244, 239, 225, 0.12) 1px, transparent 1.2px) 0 0 / 22px 22px,
     var(--paper);
   --btn-outline-hover-bg: #ff4f00;
@@ -292,11 +319,18 @@
   --tile-gap: var(--s-5);
 
   --ctl-radius: 0;
+  --color-field-border: rgba(0, 240, 255, 0.55);
   --input-bg: rgba(0, 240, 255, 0.04);
-  --input-border: 1px solid rgba(0, 240, 255, 0.32);
+  --input-border: 1px solid var(--color-field-border);
+  --color-focus: var(--accent);
+  --color-focus-on-accent: var(--accent-ink);
+  /* chamfered clip-path would cut an outside ring: draw it inside instead */
+  --btn-focus-offset: -5px;
+  --btn-focus-solid: var(--color-focus-on-accent);
+  --color-danger: #ff6b81; /* dark-only style */
 
   --btn-radius: 0;
-  --btn-weight: 700;
+  --btn-weight: var(--weight-bold);
   --btn-tracking: 0.16em;
   --btn-transform: uppercase;
   --btn-clip: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
@@ -315,7 +349,7 @@
   --text-2xl: clamp(1.75rem, 6.5vw, 2.5rem);
   --text-3xl: clamp(1.9rem, 7.2vw, 3.5rem);
   --text-4xl: clamp(2.4rem, 10vw, 6.5rem);
-  --display-weight: 600;
+  --display-weight: var(--weight-semibold);
   --display-transform: uppercase;
   --display-tracking: 0.01em;
   --display-glow: 0 0 24px rgba(0, 240, 255, 0.35);
@@ -392,8 +426,11 @@
   --tile-gap: var(--s-5);
 
   --ctl-radius: 12px;
+  --color-field-border: #6a6390;
   --input-bg: rgba(255, 255, 255, 0.5);
-  --input-border: 1px solid var(--glass-edge);
+  --input-border: 1px solid var(--color-field-border);
+  --color-focus: var(--accent);
+  --color-focus-on-accent: var(--accent-ink);
 
   --btn-radius: 999px;
   --btn-shadow: 0 6px 20px rgba(109, 40, 217, 0.32);
@@ -406,7 +443,7 @@
 
   --font-style: var(--font-jakarta), system-ui, sans-serif;
   --font-display: var(--font-jakarta), system-ui, sans-serif;
-  --display-weight: 700;
+  --display-weight: var(--weight-bold);
   --display-tracking: -0.035em;
 
   --header-bg: rgba(255, 255, 255, 0.32);
@@ -452,6 +489,8 @@
   --accent: #a78bfa !important;
   --accent-ink: #160f2e !important;
   --input-bg: rgba(255, 255, 255, 0.06);
+  --color-field-border: rgba(255, 255, 255, 0.45);
+  --color-danger: #ff6b81;
   --header-bg: rgba(12, 10, 29, 0.45);
   --dialog-bg: rgba(24, 20, 48, 0.88);
   --btn-outline-bg: rgba(255, 255, 255, 0.06);
@@ -466,7 +505,7 @@
   --paper: #e4e9f0;
   --paper-2: #e4e9f0;
   --ink: #2d3440;
-  --ink-soft: #667085;
+  --ink-soft: #5a6274; /* 5.0:1 on the paper (#667085 was 4.08:1) */
   --hairline: #cfd6e0;
   --neu-dark: #bec6d1;
   --neu-light: #ffffff;
@@ -497,17 +536,23 @@
   --tile-gap: var(--s-5);
 
   --ctl-radius: 14px;
+  /* the inset shadow alone is ~1.4:1: a quiet 1px edge keeps fields findable */
+  --color-field-border: #707a8d;
   --input-bg: var(--paper);
-  --input-border: 0 solid transparent;
+  --input-border: 1px solid var(--color-field-border);
   --input-shadow: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --color-focus: var(--accent);
+  --color-focus-on-accent: var(--accent-ink);
 
   --btn-radius: 14px;
   --btn-border-w: 0;
-  --btn-weight: 800;
+  --btn-weight: var(--weight-bold);
   --btn-shadow: 6px 6px 12px var(--neu-dark), -6px -6px 12px var(--neu-light);
   --btn-shadow-hover: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
   --btn-solid-bg: var(--paper);
-  --btn-solid-ink: var(--accent);
+  /* accent text on the extruded paper: #5b6cff is only 3.4:1, so the
+     label uses a deeper shade of the same blue (5.4:1). Dark: accent is 5.4:1. */
+  --btn-solid-ink: #3d4bd6;
   --btn-outline-bg: var(--paper);
   --btn-outline-border: transparent;
   --btn-outline-hover-bg: var(--paper);
@@ -515,7 +560,7 @@
 
   --font-style: var(--font-nunito), system-ui, sans-serif;
   --font-display: var(--font-nunito), system-ui, sans-serif;
-  --display-weight: 800;
+  --display-weight: var(--weight-bold);
   --display-tracking: -0.02em;
 
   --header-bg: var(--paper);
@@ -552,7 +597,10 @@
   --hairline: #343a44;
   --neu-dark: #1b1f25;
   --neu-light: #313741;
+  --color-field-border: #7a8496;
+  --color-danger: #ff6b81;
   --accent: #8b97ff !important;
+  --btn-solid-ink: var(--accent);
   --header-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
@@ -592,8 +640,11 @@
   --tile-gap: var(--s-5);
 
   --ctl-radius: 14px;
+  --color-field-border: rgba(17, 18, 20, 0.55);
   --input-bg: var(--paper-3);
-  --input-border: 1px solid var(--hairline);
+  --input-border: 1px solid var(--color-field-border);
+  --color-focus: var(--ink); /* matches the ink pill buttons */
+  --color-focus-on-accent: var(--accent-ink);
 
   --btn-radius: 999px;
   --btn-solid-bg: var(--ink);
@@ -606,7 +657,7 @@
 
   --font-style: var(--font-jakarta), system-ui, sans-serif;
   --font-display: var(--font-jakarta), system-ui, sans-serif;
-  --display-weight: 700;
+  --display-weight: var(--weight-bold);
   --display-tracking: -0.045em;
 
   --header-bg: rgba(241, 241, 238, 0.82);
@@ -641,6 +692,8 @@
   --ink: #f4f4f5;
   --ink-soft: #a1a1aa;
   --hairline: rgba(255, 255, 255, 0.08);
+  --color-field-border: rgba(255, 255, 255, 0.45);
+  --color-danger: #ff6b81;
   --header-bg: rgba(12, 12, 14, 0.82);
 }
 

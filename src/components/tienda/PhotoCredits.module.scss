@@ -1,0 +1,13 @@
+/* Photo attribution line (one per page that shows library photos) */
+.credits {
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  max-width: 72ch;
+}
+.credits a {
+  color: inherit;
+  text-decoration: underline;
+}
+.credits a:hover {
+  color: var(--accent);
+}

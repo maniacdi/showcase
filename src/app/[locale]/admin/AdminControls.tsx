@@ -25,7 +25,7 @@ export default function AdminControls() {
           className={styles.switch}
           onClick={toggleColorScheme}
         >
-          {colorScheme === "dark" ? "ON" : "OFF"}
+          {colorScheme === "dark" ? t("on") : t("off")}
         </button>
       </div>
 

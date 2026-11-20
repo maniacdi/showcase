@@ -5,7 +5,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--s-4);
-  padding-block: var(--s-7) var(--s-5);
+  padding-block: var(--s-6) var(--s-5);
 }
 .title {
   font-size: var(--text-2xl);
@@ -20,10 +20,10 @@
 .grid {
   display: grid;
   gap: var(--s-5);
-  padding-bottom: var(--s-8);
-  grid-template-columns: repeat(2, 1fr);
+  /* one column on small phones so "Añadir al carrito" never wraps */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   @include md {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 .card {
@@ -38,25 +38,17 @@
 }
 .thumb {
   display: block;
+  overflow: hidden;
+  background: var(--surface-alt);
 }
-.thumbInner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 1 / 1;
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: var(--text-2xl);
-  /* faint diagonal hairlines over the category color → texture, not flat */
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.14) 0,
-    rgba(255, 255, 255, 0.14) 1px,
-    transparent 1px,
-    transparent 11px
-  );
-  background-blend-mode: overlay;
+.thumbImg {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.card:hover .thumbImg {
+  transform: scale(1.03);
 }
 .cardBody {
   display: flex;
@@ -65,11 +57,8 @@
   padding: var(--s-4);
 }
 .cardCat {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-s);
   color: var(--ink-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 .cardName {
   font-size: var(--text-m);
@@ -109,10 +98,16 @@
 }
 .qtyInput {
   width: 72px;
+  min-height: 44px;
   font-family: var(--font-mono);
   font-size: var(--text-m);
   padding: var(--s-2) var(--s-3);
   @include control;
+  border-color: var(--color-field-border);
+}
+.qtyInput:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Cart */
@@ -131,11 +126,22 @@
 }
 .cartRow {
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: 48px minmax(0, 1fr) auto auto auto;
   align-items: center;
-  gap: var(--s-4);
+  gap: var(--s-2);
+  @include sm {
+    grid-template-columns: 64px minmax(0, 1fr) auto auto auto;
+    gap: var(--s-4);
+  }
   padding-block: var(--s-4);
   border-bottom: 1px solid var(--hairline);
+}
+.cartThumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--ctl-radius);
+  background: var(--surface-alt);
 }
 .cartName {
   font-weight: 600;
@@ -150,6 +156,14 @@
   cursor: pointer;
   font-size: var(--text-s);
   text-decoration: underline;
+  min-height: 44px;
+  padding-inline: var(--s-2);
+}
+.removeBtn:hover {
+  color: var(--accent);
+}
+.removeBtn:active {
+  transform: translateY(1px);
 }
 .cartFoot {
   display: flex;
@@ -173,4 +187,8 @@
   font-size: var(--text-s);
   color: var(--ink-soft);
   width: fit-content;
+}
+
+.pageCredits {
+  padding-block: var(--s-5) var(--s-7);
 }

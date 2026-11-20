@@ -38,6 +38,12 @@ export const useCartStore = create<CartState>()(
         })),
       clear: () => set({ items: [] }),
     }),
-    { name: "showcase-cart" },
+    {
+      name: "showcase-cart",
+      // v1: catalogue switched to electronics; carts saved before that hold
+      // stale names/prices under the same ids, so drop them.
+      version: 1,
+      migrate: () => ({ items: [] }) as unknown as CartState,
+    },
   ),
 );

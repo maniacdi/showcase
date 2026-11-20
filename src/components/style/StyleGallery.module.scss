@@ -17,6 +17,11 @@
   }
 }
 .item {
+  /* Resolved HERE, on the page's own style, then inherited by the tile: the
+     ring sits outside the tile, on the page background, so it must contrast
+     with the page, not with the previewed style. */
+  --pv-ring: var(--color-focus, var(--ink));
+  --pv-selected: var(--accent);
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -56,27 +61,36 @@
 .preview:hover {
   transform: translateY(-3px);
 }
+@media (prefers-reduced-motion: reduce) {
+  .preview:hover {
+    transform: none;
+  }
+}
 .preview[aria-pressed="true"] {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--pv-selected);
+}
+.preview:focus-visible {
+  outline: 3px solid var(--pv-ring);
+  outline-offset: 4px;
 }
 
 .pvTop {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  font-size: var(--text-s);
 }
 .pvNum {
-  color: var(--accent);
+  font-family: var(--font-mono);
+  color: var(--ink);
 }
+/* Outlined, not filled: white-on-accent drops below 4.5:1 in neumorphism. */
 .pvActive {
-  background: var(--accent);
-  color: var(--accent-ink);
+  color: var(--ink);
+  border: 1px solid var(--accent);
   padding: 2px var(--s-2);
   border-radius: var(--ctl-radius);
+  font-weight: 600;
 }
 .pvTitle {
   font-family: var(--font-display);
@@ -137,7 +151,8 @@
   min-width: 0;
   padding: var(--s-2) var(--s-3);
   font-size: var(--text-xs);
-  color: var(--ink-soft);
+  /* A filled sample value: --ink-soft drops to ~4.1:1 on neumorphism's field. */
+  color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -160,6 +175,11 @@
   filter: var(--btn-filter);
   white-space: nowrap;
 }
+/* Neumorphism's solid button is accent-on-paper (3.4:1 at this size); deepen
+   the ink toward --ink so the sample label clears 4.5:1 in light and dark. */
+.preview[data-style="neumorphism"] .pvBtn {
+  color: color-mix(in srgb, var(--btn-solid-ink) 70%, var(--ink));
+}
 
 .meta {
   display: flex;
@@ -174,4 +194,43 @@
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--ink-soft);
+}
+
+/* "Comparar estilos": two styles side by side on /comparar. */
+.compareRow {
+  margin-top: var(--s-6);
+}
+.compareLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--s-2) var(--s-5);
+  font-size: var(--text-s);
+  font-weight: var(--btn-weight);
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--btn-transform);
+  color: var(--ink);
+  background: var(--btn-outline-bg);
+  border: var(--btn-border-w) solid var(--btn-outline-border);
+  border-radius: var(--btn-radius);
+  box-shadow: var(--btn-shadow);
+  clip-path: var(--btn-clip);
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.compareLink:hover {
+  background: var(--btn-outline-hover-bg);
+  color: var(--btn-outline-hover-ink);
+  text-decoration: none;
+}
+.compareLink:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: var(--btn-focus-offset);
+}
+@media (prefers-reduced-motion: reduce) {
+  .compareLink {
+    transition: none;
+  }
 }

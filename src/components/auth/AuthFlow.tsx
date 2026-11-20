@@ -12,16 +12,27 @@ type Mode = "login" | "register";
 
 export default function AuthFlow({ initialMode }: { initialMode: Mode }) {
   const t = useTranslations("auth");
-  const tc = useTranslations("common");
   const [mode, setMode] = useState<Mode>(initialMode);
 
   const toLogin = () => setMode("login");
   const toRegister = () => setMode("register");
 
   return (
-    <main className={`${styles.stage} ${mode === "login" ? styles.modeLogin : styles.modeRegister}`}>
+    <main
+      className={`${styles.stage} ${mode === "login" ? styles.modeLogin : styles.modeRegister}`}
+    >
       <Link href="/" className={styles.back}>
-        {tc("backHome")}
+        <svg
+          className={styles.backIcon}
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+        <span>{t("backHome")}</span>
       </Link>
 
       <section className={`${styles.col} ${styles.colLogin}`} aria-hidden={mode !== "login"}>
@@ -34,8 +45,7 @@ export default function AuthFlow({ initialMode }: { initialMode: Mode }) {
 
       {/* Sliding brand panel (desktop) */}
       <aside className={styles.overlay}>
-        <div className={styles.grid} />
-        <div className={styles.square} />
+        <div className={styles.grid} aria-hidden="true" />
         <div className={styles.panelTop}>
           <Brand />
         </div>

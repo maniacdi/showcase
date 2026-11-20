@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Button from "@/components/ui/Button/Button";
 import type { Producto } from "@/data/productos";
 import { useCartStore } from "@/store/useCartStore";
+import { rehydrateOrders } from "@/store/useOrdersStore";
+import { useProductsStore } from "@/store/useProductsStore";
 import CartLink from "./CartLink";
 import styles from "./tienda.module.scss";
 
@@ -13,7 +15,13 @@ export default function AddToCart({ producto }: { producto: Producto }) {
   const add = useCartStore((s) => s.add);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
-  const out = producto.stock <= 0;
+  // Live stock: orders placed in this session decrement it (useOrdersStore).
+  const live = useProductsStore((s) => s.productos.find((p) => p.id === producto.id));
+  const out = (live?.stock ?? producto.stock) <= 0 || live?.active === false;
+
+  useEffect(() => {
+    void rehydrateOrders();
+  }, []);
 
   return (
     <div className={styles.addRow}>

@@ -4,48 +4,41 @@
   padding-bottom: var(--s-8);
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero ----------
+   Headline + one sentence + actions, tight enough that the style gallery
+   (the page's signature) starts inside the first screen at 1280x800. */
 .head {
-  padding-block: var(--s-8) var(--s-7);
+  padding-block: var(--s-7) var(--s-6);
   @include lg {
-    padding-block: calc(var(--s-8) * 1.5) var(--s-8);
+    padding-block: var(--s-8) var(--s-6);
   }
-}
-.kicker {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent);
 }
 .title {
   font-size: var(--text-4xl);
   line-height: 0.92;
-  margin-top: var(--s-3);
 }
 .subtitle {
   font-size: var(--text-xl);
-  margin-top: var(--s-5);
-  max-width: 28ch;
-  line-height: 1.2;
-}
-.seoLead {
-  font-size: var(--text-m);
-  color: var(--ink-soft);
   margin-top: var(--s-4);
-  max-width: 64ch;
-  line-height: 1.6;
+  max-width: 34ch;
+  line-height: 1.2;
 }
 .heroCtas {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-3);
-  margin-top: var(--s-6);
+  margin-top: var(--s-5);
+}
+.byline {
+  margin-top: var(--s-4);
+  font-size: var(--text-s);
+  color: var(--ink-soft);
 }
 /* Anchor CTAs styled from the same button tokens as <Button>. */
 %cta {
   display: inline-flex;
   align-items: center;
+  min-height: 48px;
   padding: var(--s-3) var(--s-5);
   font-size: var(--text-s);
   font-weight: var(--btn-weight);
@@ -83,43 +76,20 @@
   background: var(--btn-outline-hover-bg);
   color: var(--btn-outline-hover-ink);
 }
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-7);
-  margin: var(--s-7) 0 0;
-  padding-top: var(--s-5);
-  border-top: var(--section-border);
-}
-.stats div {
-  display: flex;
-  flex-direction: column-reverse;
-}
-.stats dt {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--ink-soft);
-}
-.stats dd {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: var(--display-weight);
-  font-size: var(--text-2xl);
-  line-height: 1;
-}
-
 /* ---------- Blocks ---------- */
 .block {
   padding-block: var(--s-8);
   border-top: var(--section-border);
 }
+/* First block follows the hero directly: less air so it peeks above the fold. */
+.blockFirst {
+  padding-top: var(--s-6);
+}
 .blockHead {
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
-  margin-bottom: var(--s-7);
+  margin-bottom: var(--s-6);
   max-width: 68ch;
 }
 .blockTitle {
@@ -132,11 +102,6 @@
   font-size: var(--text-l);
   color: var(--ink-soft);
   line-height: 1.45;
-}
-.hint {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-soft);
 }
 
 .disclaimer {
@@ -154,13 +119,10 @@
   color: var(--ink);
 }
 .disclaimerTag {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent);
+  font-size: var(--text-s);
+  font-weight: 700;
+  color: var(--ink);
   white-space: nowrap;
-  padding-top: 2px;
 }
 
 /* ---------- Demos: asymmetric bento in every style ---------- */
@@ -171,7 +133,7 @@
   display: grid;
   gap: var(--s-4);
   @include md {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
 .demo {
@@ -179,14 +141,17 @@
   display: flex;
   @include md {
     grid-column: span 3;
+    /* odd count: the last card takes the full row instead of sitting alone */
+    &:last-child:nth-child(odd) {
+      grid-column: span 6;
+    }
   }
   @include lg {
-    &:nth-child(1),
-    &:nth-child(4) {
+    /* 5 demos: a 4+2 row, then three equal cards */
+    &:nth-child(1) {
       grid-column: span 4;
     }
-    &:nth-child(2),
-    &:nth-child(3) {
+    &:nth-child(n + 2) {
       grid-column: span 2;
     }
   }
@@ -227,6 +192,11 @@
 .demoLink:hover .demoGlyph {
   transform: rotate(90deg);
 }
+@media (prefers-reduced-motion: reduce) {
+  .demoLink:hover .demoGlyph {
+    transform: none;
+  }
+}
 .demoName {
   font-family: var(--font-display);
   font-weight: var(--display-weight);
@@ -240,11 +210,10 @@
 .demoDesc {
   color: var(--ink-soft);
 }
+/* The whole card is the link; this is just its verb, in the body face. */
 .demoGo {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--text-s);
+  font-weight: 600;
   color: var(--accent);
   margin-top: var(--s-3);
 }
@@ -257,10 +226,10 @@
   display: grid;
   gap: var(--s-4);
   @include md {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @include lg {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 .project {
@@ -287,16 +256,19 @@
   justify-content: space-between;
   align-items: center;
   gap: var(--s-3);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--text-s);
 }
 .projectKind {
   color: var(--accent);
+  font-weight: 600;
 }
 .projectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  min-height: 44px;
   color: var(--ink);
+  font-weight: 600;
 }
 .projectPrivate {
   color: var(--ink-soft);

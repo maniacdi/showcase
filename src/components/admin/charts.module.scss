@@ -1,0 +1,287 @@
+@use "styles/mixins" as *;
+
+/* Charts read only theme tokens (--accent, --ink, --ink-soft, --hairline,
+   --surface-alt), so they re-skin with every design style and dark mode. */
+
+.chart {
+  @include surface;
+  position: relative;
+  margin: 0;
+  padding: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+  /* keeps edge tooltips from widening the page on phones */
+  overflow: hidden;
+}
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+.title {
+  font-size: var(--text-m);
+  font-weight: var(--weight-semibold);
+}
+.desc {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+
+/* ---- Shared plot frame: y labels + plot area ---- */
+.frame {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s-2);
+}
+.yAxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  height: 160px;
+  line-height: 1;
+}
+.plot {
+  position: relative;
+  height: 160px;
+  border-bottom: 1px solid var(--ink-soft);
+}
+.grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed var(--hairline);
+  pointer-events: none;
+}
+.gridTop {
+  top: 0;
+}
+.gridMid {
+  top: 50%;
+}
+
+/* ---- Column chart ---- */
+.cols {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 3px;
+  @include sm {
+    gap: var(--s-1);
+  }
+}
+.col {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+.bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: color-mix(in srgb, var(--accent) 60%, transparent);
+  border-radius: var(--radius) var(--radius) 0 0;
+  transform-origin: 50% 100%;
+  animation: grow-y 0.6s ease-out both;
+  transition: background 0.15s ease;
+}
+.current .bar,
+.col:hover .bar {
+  background: var(--accent);
+}
+.xAxis {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  text-align: center;
+  @include sm {
+    gap: var(--s-1);
+  }
+}
+.xAxis span {
+  /* sparse axes leave neighbours empty, so a label may spill into them */
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+}
+.xCurrent {
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+
+/* Tooltip on hover (the data is also in the hidden table for screen readers) */
+.tip {
+  position: absolute;
+  bottom: calc(100% + var(--s-1));
+  left: 50%;
+  z-index: 1;
+  translate: -50% 0;
+  padding: var(--s-1) var(--s-2);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  border-radius: var(--radius);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+/* sits just above its bar: --h is the bar's 0..1 ratio */
+.col .tip {
+  bottom: calc(var(--h, 0) * 100% + var(--s-1));
+}
+.col:first-child .tip {
+  left: 0;
+  translate: 0 0;
+}
+.col:last-child .tip {
+  left: auto;
+  right: 0;
+  translate: 0 0;
+}
+.col:hover .tip,
+.dot:hover .tip {
+  opacity: 1;
+}
+
+/* ---- Line chart ---- */
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.area {
+  fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  stroke: none;
+}
+.line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.svg {
+  animation: fade-in 0.6s ease-out both;
+}
+.dot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+}
+.dot::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  transition: transform 0.15s ease;
+}
+.dot:hover::before {
+  transform: scale(1.3);
+}
+.dotCurrent::before {
+  background: var(--accent);
+}
+
+/* ---- Horizontal bars ---- */
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-1) var(--s-3);
+  font-size: var(--text-s);
+}
+.rowName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rowValue {
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+}
+.track {
+  grid-column: 1 / -1;
+  height: 10px;
+  background: var(--surface-alt);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  animation: grow-x 0.6s ease-out both;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .fill,
+  .svg {
+    animation: none;
+  }
+  .bar,
+  .tip,
+  .dot::before {
+    transition: none;
+  }
+}

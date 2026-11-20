@@ -19,11 +19,14 @@ entorno**. Rápida, accesible y optimizada para SEO.
 | Ruta | Qué es |
 |------|--------|
 | `/` | Hub: pitch, galería de estilos, demos y proyectos reales |
-| `/servicios` | Landing de negocio local (hero, servicios, por qué, precios, testimonios, contacto + mapa) |
-| `/tienda` `/tienda/[slug]` `/tienda/carrito` | Ecommerce: catálogo, ficha, carrito persistido, checkout mock |
-| `/reservas` | Reserva de citas (servicio + día + hora) |
+| `/servicios` | Landing de negocio local: servicios, precios, presupuestador por pasos, reseñas estilo ficha de Google, rendimiento medido en vivo (web-vitals), contacto + mapa |
+| `/tienda` `/tienda/[slug]` `/tienda/carrito` | Ecommerce de electrónica: catálogo, ficha, carrito persistido, checkout simulado |
+| `/reservas` | Clínica con varios profesionales: servicio, profesional, día y hora; recordatorio simulado, .ics y cancelación |
+| `/restaurante` `/restaurante/carta` `/restaurante/reservar` | Restaurante: carta con los 14 alérgenos y filtros, QR por mesa (`?mesa=N`), reserva de mesa por turnos |
+| `/marca` | "Tu negocio aquí": nombre, color, tipografía y logo aplicados a todo el showcase; enlace compartible `?brand=` |
+| `/comparar` | Dos estilos de diseño lado a lado (`?a=&b=`) |
 | `/login` `/register` | Auth con panel deslizante |
-| `/admin` | Panel (gateado): citas, productos, modo oscuro y tipografía |
+| `/admin` | Panel (gateado): resumen con gráficas, citas y agenda, pedidos, productos, restaurante (reservas, menú del día, QR), modo oscuro y tipografía |
 
 Linkage entre verticales: reservar una cita o desactivar un producto en `/admin`
 se refleja en `/reservas` y `/tienda` en la misma sesión.
@@ -159,6 +162,57 @@ Seis lenguajes visuales sobre el mismo HTML: **Swiss** (por defecto),
 - Imágenes OG dinámicas (site + por producto) vía `opengraph-image`.
 - Captación: CTA → portfolio, botón WhatsApp flotante, formularios que abren tu
   email (`mailto`), testimonios. Configurable en `src/config/site.ts`.
+
+## Checkout simulado (`/tienda/carrito`)
+Cuatro pasos en la misma URL: **carrito → envío → pago → confirmación**.
+- Envío: nombre, email, dirección, código postal español (01000 a 52999), teléfono y
+  método (estándar 4,95 €, gratis desde 100 €; urgente 9,95 €; recogida en tienda).
+- Pago **simulado, no se cobra nada**: tarjeta con formato, Luhn, caducidad y CVC
+  (tarjeta de prueba `4242 4242 4242 4242`) o Bizum (móvil español). Los datos de
+  tarjeta viven solo en el estado del formulario: nunca se persisten ni se envían;
+  el pedido guarda únicamente los 4 últimos dígitos.
+- Totales con desglose de IVA (21 %, los precios ya lo incluyen): base + IVA = total,
+  calculado en céntimos (`src/lib/checkout.ts`).
+- Confirmación: número de pedido, entrega estimada (días laborables), resumen y
+  vista previa del email de confirmación (no se envía nada).
+- Pedidos en `src/store/useOrdersStore.ts` (sessionStorage, como las citas: cada
+  visitante empieza con el stock de la semilla). Al pedir baja el stock del
+  catálogo; sin stock suficiente no se puede continuar. Los pedidos se fechan en el
+  "hoy" fijo de la demo (`AGENDA_HOY`) y aparecen en `/admin` (tabla «Pedidos» y
+  gráfica de ventas).
+
+## Resumen del panel (`/admin`)
+- KPIs (citas esta semana, ventas del mes, ticket medio, productos activos) y tres
+  gráficas sin librerías (CSS + SVG inline, solo tokens): reservas por día (14 días),
+  ventas por semana (8 semanas) y productos más vistos. Cada gráfica lleva una tabla
+  oculta con los datos para lectores de pantalla.
+- Datos: citas y pedidos de la sesión + historial de ejemplo determinista
+  (`src/data/clinica.ts`, `src/data/ventas.ts`), anclado a `AGENDA_HOY` para que
+  servidor y navegador pinten lo mismo. Etiquetado como «Datos de ejemplo».
+- Exportar a CSV (citas, productos, pedidos): Blob en cliente con BOM UTF-8 para que
+  Excel lea bien los acentos; en español `;` y coma decimal, en inglés `,` y punto.
+  Las celdas que empiezan por `=`, `+`, `-` o `@` se neutralizan (inyección de
+  fórmulas).
+
+## PWA (instalable y offline)
+- `src/app/manifest.ts` → `/manifest.webmanifest` (colores de `src/lib/ogTokens.ts`,
+  iconos 192/512 normales y *maskable* en `public/icons/`).
+- Iconos: `node scripts/generate-pwa-icons.mjs` los regenera desde la marca de
+  `app/icon.svg` con `sharp` (ya viene con Next, sin dependencias nuevas).
+- `public/sw.js` (escrito a mano): precachea `/`, `/tienda`, `/reservas`,
+  `/servicios` y `/offline` (+ `/en/offline`); páginas *network-first* con
+  copia en caché y página offline localizada como respaldo; estáticos e imágenes
+  *cache-first*. Sube `VERSION` en el fichero para invalidar cachés.
+- Se registra solo en producción (`src/components/pwa/ServiceWorkerRegister.tsx`)
+  para no cachear los chunks de HMR. En dev: `?sw=1` lo fuerza y `?sw=0` lo
+  desregistra.
+- Botón «Instalar app» en el pie (aparece cuando el navegador lanza
+  `beforeinstallprompt`, Chrome/Edge/Android) y aviso para iOS: «Compartir, Añadir a
+  pantalla de inicio».
+- Probar: `npm run build && npm start`, abrir `http://localhost:3000`, DevTools →
+  Application (Manifest, Service workers, Cache storage) → marcar *Offline* y
+  navegar: las páginas visitadas cargan desde caché y el resto muestra `/offline`.
+  Lighthouse → "Installable".
 
 ## Auth (mock)
 - API en `src/lib/auth/useAuth.ts`; gating con `src/lib/auth/RequireAuth.tsx`.

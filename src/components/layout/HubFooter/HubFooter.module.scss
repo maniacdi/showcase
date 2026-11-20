@@ -19,14 +19,8 @@
   -webkit-backdrop-filter: var(--footer-backdrop);
   border-radius: var(--footer-radius) var(--footer-radius) 0 0;
   color: var(--ink);
-}
-
-.kicker {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent);
+  /* the band is dark in every style: ring in the band's own ink */
+  --color-focus: var(--footer-ink);
 }
 
 /* ---------- Closing CTA (boxed in every style) ---------- */
@@ -41,7 +35,7 @@
     padding: var(--s-7);
   }
   @include lg {
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
     align-items: end;
     gap: var(--s-8);
   }
@@ -76,7 +70,9 @@
 %cta {
   display: inline-flex;
   align-items: center;
-  padding: var(--s-4) var(--s-6);
+  min-height: 48px;
+  white-space: nowrap;
+  padding: var(--s-2) var(--s-6);
   font-size: var(--text-m);
   font-weight: var(--btn-weight);
   letter-spacing: var(--btn-tracking);
@@ -97,11 +93,23 @@
   transform: var(--btn-hover-transform);
   box-shadow: var(--btn-shadow-hover);
 }
+%cta:active {
+  transform: var(--btn-active-transform);
+  box-shadow: var(--btn-shadow-active);
+  opacity: 0.9;
+}
+/* same clip-path handling as ui/Button (Neofuturism draws the ring inside) */
+%cta:focus-visible {
+  outline-offset: var(--btn-focus-offset);
+}
 .ctaPrimary {
   @extend %cta;
   background: var(--btn-solid-bg);
   color: var(--btn-solid-ink);
   border-color: var(--btn-solid-border);
+}
+.ctaPrimary:focus-visible {
+  outline-color: var(--btn-focus-solid);
 }
 .ctaSecondary {
   @extend %cta;
@@ -115,8 +123,7 @@
 }
 .ctaMeta {
   width: 100%;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-s);
   color: var(--ink-soft);
   @include lg {
     text-align: right;
@@ -128,9 +135,9 @@
   display: grid;
   gap: var(--s-6) var(--s-5);
   padding-block: var(--s-8) var(--s-6);
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   @include lg {
-    grid-template-columns: 2fr repeat(4, 1fr);
+    grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
   }
 }
 .about {
@@ -152,6 +159,15 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
+  min-width: 0;
+}
+/* Contact holds the e-mail address: full row on phones so it isn't squeezed
+   into a ~130px half column at 320px. */
+.colWide {
+  grid-column: 1 / -1;
+  @include sm {
+    grid-column: auto;
+  }
 }
 .col ul {
   list-style: none;
@@ -164,6 +180,9 @@
 .col a {
   color: var(--ink);
   font-size: var(--text-s);
+  overflow-wrap: break-word;
+}
+.col .email {
   overflow-wrap: anywhere;
 }
 .col a:hover {
@@ -171,15 +190,15 @@
   text-decoration: none;
 }
 .colTitle {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-family: var(--font-style);
+  font-size: var(--text-s);
+  font-weight: var(--weight-semibold);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--ink-soft);
 }
 .styleHint {
-  font-size: var(--text-xs);
+  font-size: var(--text-s);
   color: var(--ink-soft);
 }
 
@@ -208,17 +227,21 @@
   gap: var(--s-2);
   padding-block: var(--s-5) var(--s-8);
   border-top: 1px solid var(--hairline);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-s);
   color: var(--ink-soft);
-  /* leave room for the floating style dock / WhatsApp on mobile */
-  padding-bottom: var(--float-gap);
+  /* leave room for the floating style dock / WhatsApp at every width */
+  padding-bottom: max(var(--float-gap), var(--s-8));
   @include md {
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: var(--s-8);
   }
+}
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--s-3);
 }
 .barWrap {
   position: relative;

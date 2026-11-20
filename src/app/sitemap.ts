@@ -10,6 +10,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/servicios",
     "/reservas",
     "/tienda",
+    "/restaurante",
+    "/restaurante/carta",
+    "/restaurante/reservar",
+    "/marca",
+    "/comparar",
     ...productosSeed.map((p) => `/tienda/${p.slug}`),
   ];
   const entries: MetadataRoute.Sitemap = [];

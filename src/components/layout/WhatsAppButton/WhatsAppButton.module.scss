@@ -11,15 +11,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #25d366;
-  color: #fff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  background: var(--whatsapp-bg);
+  color: var(--whatsapp-ink);
+  box-shadow: var(--whatsapp-shadow);
   transition: transform 0.15s ease;
+  /* 48px at every width: the old 52px desktop size covered more content */
   @include md {
     right: var(--s-5);
     bottom: var(--s-5);
-    width: 52px;
-    height: 52px;
   }
 }
 .fab svg {
@@ -27,7 +26,7 @@
   height: 24px;
 }
 /* Only real pointers get the hover lift (touch would leave it stuck). */
-@media (hover: hover) {
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .fab:hover {
     transform: scale(1.06);
   }
@@ -35,6 +34,8 @@
 .fab:hover {
   text-decoration: none;
 }
-.fab:active {
-  transform: scale(0.96);
+@media (prefers-reduced-motion: no-preference) {
+  .fab:active {
+    transform: scale(0.96);
+  }
 }

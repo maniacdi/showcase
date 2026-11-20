@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Brand from "@/components/layout/Brand/Brand";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher/LocaleSwitcher";
+import InstallAppButton from "@/components/pwa/InstallAppButton";
 import Container from "@/components/ui/Container/Container";
 import { SITE } from "@/config/site";
 import styles from "./HubFooter.module.scss";
@@ -26,7 +27,6 @@ export default function HubFooter() {
         {/* Closing CTA */}
         <section className={styles.cta} aria-labelledby="footer-cta">
           <div className={styles.ctaText}>
-            <span className={styles.kicker}>{t("ctaKicker")}</span>
             <h2 id="footer-cta" className={styles.ctaTitle}>
               {t("ctaTitle")}
             </h2>
@@ -34,7 +34,7 @@ export default function HubFooter() {
           </div>
           <div className={styles.ctaActions}>
             <a href={`mailto:${SITE.contactEmail}`} className={styles.ctaPrimary}>
-              {t("ctaEmail")} →
+              {t("ctaEmail")}
             </a>
             <a href={wa} target="_blank" rel="noopener noreferrer" className={styles.ctaSecondary}>
               WhatsApp
@@ -49,7 +49,7 @@ export default function HubFooter() {
         <Container>
           <div className={styles.grid}>
             <div className={styles.about}>
-              <Brand />
+              <Brand fixed />
               <p>{t("about")}</p>
             </div>
 
@@ -79,25 +79,27 @@ export default function HubFooter() {
               </ul>
             </nav>
 
-            <nav className={styles.col} aria-label={t("contact")}>
+            <nav className={`${styles.col} ${styles.colWide}`} aria-label={t("contact")}>
               <h3 className={styles.colTitle}>{t("contact")}</h3>
               <ul>
                 <li>
-                  <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+                  <a href={`mailto:${SITE.contactEmail}`} className={styles.email}>
+                    {SITE.contactEmail}
+                  </a>
                 </li>
                 <li>
                   <a href={wa} target="_blank" rel="noopener noreferrer">
-                    WhatsApp ↗
+                    WhatsApp
                   </a>
                 </li>
                 <li>
                   <a href={SITE.portfolioUrl} target="_blank" rel="noopener noreferrer">
-                    Portfolio ↗
+                    Portfolio
                   </a>
                 </li>
                 <li>
                   <a href={SITE.githubUrl} target="_blank" rel="noopener noreferrer">
-                    GitHub ↗
+                    GitHub
                   </a>
                 </li>
               </ul>
@@ -107,6 +109,7 @@ export default function HubFooter() {
               <h3 className={styles.colTitle}>{t("language")}</h3>
               <LocaleSwitcher />
               <p className={styles.styleHint}>{t("styleHint")}</p>
+              <InstallAppButton />
             </div>
           </div>
         </Container>
@@ -118,12 +121,13 @@ export default function HubFooter() {
 
         <Container className={styles.barWrap}>
           <div className={styles.bar}>
-            <span>
-              © {year} Javi García Magaldi · {t("rights")}
+            <span className={styles.legal}>
+              <span>© {year} Javi García Magaldi</span>
+              <span>{t("rights")}</span>
             </span>
             <span>{t("built")}</span>
             <a href="#top" className={styles.toTop}>
-              {t("toTop")} ↑
+              {t("toTop")}
             </a>
           </div>
         </Container>

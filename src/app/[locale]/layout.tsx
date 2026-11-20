@@ -7,10 +7,13 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import WhatsAppButton from "@/components/layout/WhatsAppButton/WhatsAppButton";
 import { SITE } from "@/config/site";
+import { OG_TOKENS } from "@/lib/ogTokens";
 import { FONT_CLASSNAMES } from "@/themes/fonts";
+import BrandApplier from "@/themes/BrandApplier";
 import PrefsApplier from "@/themes/PrefsApplier";
 import PrefsScript from "@/themes/PrefsScript";
 import StyleSwitcher from "@/components/style/StyleSwitcher";
+import ServiceWorkerRegister from "@/components/pwa/ServiceWorkerRegister";
 import "@/styles/globals.scss";
 
 export const viewport: Viewport = {
@@ -18,14 +21,15 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
-    { media: "(prefers-color-scheme: dark)", color: "#14161a" },
+    { media: "(prefers-color-scheme: light)", color: OG_TOKENS.paper },
+    { media: "(prefers-color-scheme: dark)", color: OG_TOKENS.paperDark },
   ],
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   applicationName: "Showcase",
+  appleWebApp: { capable: true, title: "Showcase", statusBarStyle: "default" },
   authors: [{ name: "Javi García Magaldi", url: SITE.portfolioUrl }],
   creator: "Javi García Magaldi",
   formatDetection: { telephone: false, email: false, address: false },
@@ -82,10 +86,12 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <PrefsApplier />
+          <BrandApplier />
           {children}
           <StyleSwitcher />
           <WhatsAppButton />
           <Analytics />
+          <ServiceWorkerRegister />
         </NextIntlClientProvider>
       </body>
     </html>

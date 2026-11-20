@@ -9,5 +9,5 @@
 }
 .input:focus {
   border-color: var(--accent);
-  outline: none;
 }
+/* Ring comes from the global :focus-visible (--color-focus). */

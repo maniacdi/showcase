@@ -1,0 +1,138 @@
+@use "styles/mixins" as *;
+
+/* ---- Resumen ---- */
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  margin-bottom: var(--s-7);
+}
+.overviewHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+.overviewTitle {
+  font-size: var(--text-xl);
+}
+.sampleTag {
+  font-size: var(--text-xs);
+  color: var(--ink);
+  border: 1px dashed var(--ink-soft);
+  border-radius: var(--radius);
+  padding: var(--s-1) var(--s-2);
+}
+.overviewIntro {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+  max-width: 72ch;
+}
+
+.kpis {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  @include lg {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.kpi {
+  @include surface;
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  min-width: 0;
+  @include md {
+    padding: var(--s-5);
+  }
+}
+.kpiLabel {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.kpiValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-l);
+  @include md {
+    font-size: var(--text-xl);
+  }
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.kpiDetail {
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}
+
+.charts {
+  display: grid;
+  gap: var(--s-4);
+  align-items: start;
+  @include lg {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include xl {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.exportBar {
+  @include tile(1px solid var(--hairline), var(--s-4) 0 0);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  @include md {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.exportCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+.exportTitle {
+  font-size: var(--text-m);
+}
+.exportHint {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.exportActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+/* ---- Pedidos ---- */
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin: var(--s-7) 0 var(--s-2);
+}
+.sectionHead h2 {
+  margin: 0;
+}
+.sectionIntro {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+  margin-bottom: var(--s-4);
+  max-width: 72ch;
+}
+.cellSub {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}
+.cellLine {
+  display: block;
+}

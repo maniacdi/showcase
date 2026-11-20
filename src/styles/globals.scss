@@ -1,6 +1,7 @@
 @use "tokens";
 @use "dark";
 @use "design-styles";
+@use "brand";
 
 * {
   box-sizing: border-box;
@@ -70,20 +71,24 @@ h2 {
   color: var(--accent-ink);
 }
 
-/* Smooth cross-fade when switching design style (skipped for reduced motion). */
-html.style-switching *,
-html.style-switching *::before,
-html.style-switching *::after {
-  transition:
-    background-color 0.35s ease,
-    color 0.35s ease,
-    border-color 0.35s ease,
-    border-radius 0.35s ease,
-    box-shadow 0.35s ease !important;
+/* Smooth cross-fade when switching design style. Gated in CSS too (not only in
+   useSwitchStyle) because this selector out-specifies the reduced-motion reset. */
+@media (prefers-reduced-motion: no-preference) {
+  html.style-switching *,
+  html.style-switching *::before,
+  html.style-switching *::after {
+    transition:
+      background-color 0.35s ease,
+      color 0.35s ease,
+      border-color 0.35s ease,
+      border-radius 0.35s ease,
+      box-shadow 0.35s ease !important;
+  }
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 a {
@@ -95,18 +100,28 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Focus ring: per-style token (>=3:1 on the surface), shown instantly —
+   outline is never part of any transition list. */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
 
+/* Reduced motion: collapse every animation/transition to its end state
+   (durations ~0 rather than `none`, so entrance animations still land). */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  * {
-    animation: none !important;
-    transition: none !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
   }
 }
 

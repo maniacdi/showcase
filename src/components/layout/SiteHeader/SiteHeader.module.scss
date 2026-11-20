@@ -19,7 +19,7 @@
 .brand {
   font-family: var(--font-mono);
   font-size: var(--text-l);
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   color: var(--ink);
   text-decoration: none;
 }
@@ -68,5 +68,5 @@
 }
 .cta {
   color: var(--accent) !important;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }

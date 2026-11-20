@@ -1,0 +1,365 @@
+@use "styles/mixins" as *;
+
+/* ---------- Layout ---------- */
+.studio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-7);
+  padding-block: var(--s-6) var(--s-8);
+  @include lg {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+}
+.form {
+  @include surface;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  padding: var(--s-5);
+  min-width: 0;
+}
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+  @include lg {
+    position: sticky;
+    top: 88px;
+  }
+}
+.formTitle {
+  font-size: var(--text-l);
+}
+
+/* ---------- Fields ---------- */
+.fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+}
+.legend {
+  padding: 0;
+  margin-bottom: var(--s-2);
+  font-size: var(--text-s);
+  font-weight: var(--weight-semibold);
+  color: var(--ink-soft);
+}
+.hint {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+.warn {
+  font-size: var(--text-s);
+  color: var(--ink);
+  padding-left: var(--s-3);
+  border-left: 3px solid var(--color-danger);
+}
+.status {
+  min-height: 1.5em;
+  font-size: var(--text-s);
+  color: var(--ink);
+}
+
+/* Native radios stay in the DOM (keyboard arrows, form semantics); only the
+   label is drawn. The ring follows the focused input via :has(). */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.chip {
+  @include control;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--text-s);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.chip input,
+.swatch input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.chip:has(input:checked) {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.chip:has(input:focus-visible),
+.swatch:has(input:focus-visible),
+.colorCustom:has(input:focus-visible) {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.swatch {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ctl-radius);
+  background: var(--sw);
+  border: 2px solid var(--surface-alt);
+  box-shadow: 0 0 0 1px var(--color-field-border);
+  cursor: pointer;
+}
+.swatch:has(input:checked) {
+  box-shadow:
+    0 0 0 2px var(--paper),
+    0 0 0 4px var(--ink);
+}
+
+.colorRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+.colorCustom {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  font-size: var(--text-s);
+  cursor: pointer;
+}
+.colorCustom input {
+  width: 44px;
+  height: 44px;
+  padding: 2px;
+  border: var(--input-border);
+  border-radius: var(--ctl-radius);
+  background: var(--input-bg);
+  cursor: pointer;
+}
+.colorCustom input:focus-visible {
+  outline: none; /* ring drawn on the label via :has() */
+}
+.hex {
+  font-family: var(--font-mono);
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+
+.select {
+  @include control;
+  min-height: 44px;
+  width: 100%;
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-style);
+  font-size: var(--text-m);
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+.logoThumb {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border: 1px solid var(--hairline);
+  border-radius: var(--ctl-radius);
+  background: var(--surface-alt);
+}
+.file {
+  min-height: 44px;
+  max-width: 100%;
+  font-family: var(--font-style);
+  font-size: var(--text-s);
+  color: var(--ink);
+}
+.file::file-selector-button {
+  @include control;
+  min-height: 44px;
+  margin-right: var(--s-3);
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-style);
+  font-size: var(--text-s);
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-3);
+  @include sm {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.links a {
+  width: 100%;
+}
+
+/* ---------- Mini landing preview ---------- */
+.preview {
+  @include surface;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  padding: var(--s-5);
+  overflow: hidden;
+  background: var(--page-bg);
+  @include md {
+    padding: var(--s-6);
+  }
+}
+.pvBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-bottom: var(--s-4);
+  border-bottom: var(--header-border);
+}
+.pvBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+}
+.pvBrand img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.pvMark {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: var(--ctl-radius);
+  background: var(--accent);
+}
+.pvName {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: var(--text-l);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pvNav {
+  display: none;
+  gap: var(--s-4);
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+  @include sm {
+    display: inline-flex;
+  }
+}
+.pvHero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-width: 40ch;
+}
+.pvKicker {
+  font-size: var(--text-s);
+  font-weight: var(--weight-semibold);
+  color: var(--ink-soft);
+}
+.pvHeadline {
+  font-size: var(--text-2xl);
+  text-transform: var(--display-transform);
+  letter-spacing: var(--display-tracking);
+  text-shadow: var(--display-glow);
+}
+.pvLead {
+  color: var(--ink-soft);
+}
+.pvCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+%pv-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--s-2) var(--s-5);
+  font-size: var(--text-s);
+  font-weight: var(--btn-weight);
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--btn-transform);
+  border: var(--btn-border-w) solid transparent;
+  border-radius: var(--btn-radius);
+  box-shadow: var(--btn-shadow);
+  clip-path: var(--btn-clip);
+  filter: var(--btn-filter);
+}
+.pvCtaSolid {
+  @extend %pv-cta;
+  background: var(--btn-solid-bg);
+  color: var(--btn-solid-ink);
+  border-color: var(--btn-solid-border);
+}
+.pvCtaOutline {
+  @extend %pv-cta;
+  background: var(--btn-outline-bg);
+  color: var(--ink);
+  border-color: var(--btn-outline-border);
+}
+.pvCards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-3);
+  @include sm {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.pvCard {
+  @include tile($top: 2px solid var(--accent), $pad: var(--s-3) 0 0);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  min-width: 0;
+}
+.pvCardTitle {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+}
+.pvCardText {
+  font-size: var(--text-s);
+  color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
+}

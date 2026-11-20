@@ -32,7 +32,6 @@ export default function LoginFields({ onSwitch }: { onSwitch: () => void }) {
   return (
     <div className={styles.fields}>
       <div className={styles.headBlock}>
-        <span className={styles.eyebrow}>{t("loginEyebrow")}</span>
         <h1 className={styles.title}>{t("loginTitle")}</h1>
         <p className={styles.subtitle}>{t("loginSub")}</p>
       </div>

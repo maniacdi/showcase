@@ -1,8 +1,9 @@
 import { ImageResponse } from "next/og";
+import { OG_TOKENS as T } from "@/lib/ogTokens";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Showcase — Desarrollo web a medida para comercios";
+export const alt = "Showcase: desarrollo web a medida para comercios";
 
 // Branded social card for any page under [locale] (unless a deeper segment overrides).
 export default function OgImage() {
@@ -15,42 +16,51 @@ export default function OgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#16181d",
-          color: "#fafaf9",
+          background: T.ink,
+          color: T.paper,
           padding: "72px",
           fontFamily: "sans-serif",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <div style={{ position: "relative", width: "44px", height: "44px", display: "flex" }}>
-            <div style={{ position: "absolute", inset: 0, border: "3px solid #fafaf9" }} />
+            <div style={{ position: "absolute", inset: 0, border: `3px solid ${T.paper}` }} />
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "#1f4fff",
+                background: T.accent,
                 clipPath: "polygon(8% 92%, 92% 8%, 92% 92%)",
               }}
             />
           </div>
-          <span style={{ fontSize: "34px", fontWeight: 700, letterSpacing: "-0.02em" }}>
+          <span style={{ fontSize: "34px", fontWeight: T.weightBold, letterSpacing: "-0.02em" }}>
             showcase
           </span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span style={{ fontSize: "68px", fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.03em", maxWidth: "900px" }}>
+          <span style={{ fontSize: "68px", fontWeight: T.weightBold, lineHeight: 1.05, letterSpacing: "-0.03em", maxWidth: "900px" }}>
             Desarrollo web a medida para comercios
           </span>
-          <span style={{ marginTop: "24px", fontSize: "30px", color: "#a4a8b0" }}>
-            Tienda online · Reservas · Landing · Panel — rápido y optimizado para SEO
-          </span>
+          <div
+            style={{
+              marginTop: "24px",
+              display: "flex",
+              flexDirection: "column",
+              fontSize: "30px",
+              color: T.inkSoftOnDark,
+            }}
+          >
+            <span>Tienda online, reservas, landing y panel.</span>
+            <span>Rápido y optimizado para SEO.</span>
+          </div>
         </div>
 
         <div style={{ display: "flex", height: "10px" }}>
-          <div style={{ flex: 1, background: "#1f4fff" }} />
-          <div style={{ flex: 1, background: "#0e7c5a" }} />
-          <div style={{ flex: 1, background: "#c2410c" }} />
+          <div style={{ flex: 1, background: T.accent }} />
+          <div style={{ flex: 1, background: T.accentTienda }} />
+          <div style={{ flex: 1, background: T.accentReservas }} />
         </div>
       </div>
     ),
